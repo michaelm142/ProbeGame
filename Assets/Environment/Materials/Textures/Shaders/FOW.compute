@@ -1,0 +1,36 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+#pragma kernel CSStart
+
+#define POINT_COUNT 5
+
+float TextureDim;
+float RectWidth;
+float RectHeight;
+
+RWStructuredBuffer<float3> points;
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Result;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 thread_id : SV_DispatchThreadID)
+{
+	float2 position = float2(thread_id.x / TextureDim * RectWidth, thread_id.y / TextureDim * RectHeight);
+	float value = Result[thread_id.xy].a;
+
+	for (int i = 0; i < POINT_COUNT; i++)
+	{
+		float2 p = points[i].xy;
+		value -= 1.0 - saturate(distance(position, p) / points[i].z);
+	}
+
+	Result[thread_id.xy] = float4(0, 0, 0, value);
+}
+
+
+[numthreads(8, 8, 1)]
+void CSStart(uint3 thread_id : SV_DispatchThreadID)
+{
+	Result[thread_id.xy] = float4(0, 0, 0, 1);
+}
