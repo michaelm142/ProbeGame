@@ -16,7 +16,6 @@ public class Drone : MonoBehaviour
 
     public float MaxHealth = 30.0f;
     public float Health;
-    public float DamageMultiplyer = 1.0f;
 
     public bool hacking { get { return connectedSubsystem != null; } }
 
@@ -57,9 +56,11 @@ public class Drone : MonoBehaviour
         selectRing.SetActive(false);
     }
 
-    public void Damage(float ammount)
+    public void Damage(object[] info)
     {
-        Health -= ammount * DamageMultiplyer;
-        DroneController.Instance.SendMessage("DroneDamaged", this);
+        float ammount = (float)info[0];
+        Vector3 position = (Vector3)info[1];
+        Health -= ammount;
+        DroneController.Instance.DroneDamaged(this, position);
     }
 }

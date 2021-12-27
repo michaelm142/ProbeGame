@@ -9,7 +9,7 @@ public class AnchorAlign : EditorWindow
     public static void OnMenuItem()
     {
         var obj = Selection.activeObject as GameObject;
-        if (obj == null || obj.GetComponent<RectTransform>() != null)
+        if (obj != null && obj.GetComponent<RectTransform>() != null)
         {
             var rt = obj.GetComponent<RectTransform>();
             if (rt.parent == null)
@@ -17,13 +17,19 @@ public class AnchorAlign : EditorWindow
             var parentRect = (rt.parent as RectTransform).rect;
             var rect = rt.rect;
 
-            float minX = rect.x / parentRect.width;
-            float minY = rect.y / parentRect.height;
-            float maxX = (rect.x + rect.width) / parentRect.width;
-            float maxY = (rect.y + rect.height) / parentRect.height;
+            float minX = (rt.offsetMin.x + rect.min.x + rt.anchoredPosition.x) / parentRect.width;
+            float maxX = (rt.offsetMax.x + rect.max.x + rt.anchoredPosition.x) / parentRect.width;
+            float minY = (rt.offsetMin.y + rect.min.y + rt.anchoredPosition.y) / parentRect.height;
+            float maxY = (rt.offsetMax.y + rect.max.y + rt.anchoredPosition.y) / parentRect.height;
+            float offsetX = rt.anchoredPosition.x / parentRect.width;
+            float offsetY = rt.anchoredPosition.y / parentRect.height;
+            Undo.RegisterCompleteObjectUndo(rt, "Undo Align Anchors");
 
+            //rt.sizeDelta = new Vector2(-maxX, -maxY);
+            //rt.anchoredPosition = Vector2.zero;
             rt.anchorMin = new Vector2(minX, minY);
             rt.anchorMax = new Vector2(maxX, maxY);
+
         }
 
     }

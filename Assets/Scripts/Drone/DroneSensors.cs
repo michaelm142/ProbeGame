@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class DroneSensors : MonoBehaviour
 {
+    public float Radius = 10.0f;
+
     // Start is called before the first frame update
     void Start()
     {
         var collider = gameObject.AddComponent<SphereCollider>();
         var body = gameObject.AddComponent<Rigidbody>();
         body.isKinematic = true;
-        collider.radius = 10.0f;
         collider.isTrigger = true;
     }
 

@@ -28,6 +28,7 @@ public class EnemyBehavior : MonoBehaviour
     void Update()
     {
         currentState.Update();
+        //Debug.Log(currentState.ToString());
 
         if (currentTarget != null && Vector3.Distance(currentTarget.transform.position, transform.position) < AttackRadius)
             gameObject.BroadcastMessage("Attack", SendMessageOptions.DontRequireReceiver);
@@ -93,10 +94,11 @@ public abstract class AiState
 
         foreach (var p in probes)
         {
-            if (Vector3.Distance(p.transform.position, transform.position) < behavior.LOS)
+            float distance = Vector3.Distance(p.transform.position, transform.position);
+            if (distance < behavior.LOS)
             {
                 Vector3 L = (p.transform.position - transform.position).normalized;
-                if (Vector3.Angle(L, transform.forward) < behavior.SightAngle)
+                if (Vector3.Angle(L, transform.forward) < behavior.SightAngle || distance < behavior.LOS * 0.1f)
                     outval.Add(p);
             }
         }

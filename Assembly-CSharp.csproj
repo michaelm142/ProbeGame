@@ -85,10 +85,12 @@
     <Compile Include="Assets\PostProcessing\Runtime\Models\FogModel.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Components\TaaComponent.cs" />
+    <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Components\ScreenSpaceReflectionComponent.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\VignetteModel.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\GrainModel.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\PostProcessingModel.cs" />
+    <Compile Include="Assets\3rd Party\Sci-Fi UI\Demo_Assets\scripts\GUI_Demo.cs" />
     <Compile Include="Assets\Scripts\UI\GetNativeResolutions.cs" />
     <Compile Include="Assets\Scripts\AI\Idle.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\PostProcessingProfile.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Assets\Scripts\UI\Menus\DronePurchaseing.cs" />
     <Compile Include="Assets\TransformingRobot\Scripts\TransformingRobotCameraScript.cs" />
     <Compile Include="Assets\Scripts\UI\MiniMap\MiniMapClickNavigation.cs" />
+    <Compile Include="Assets\Scripts\UI\MiniMap\MinimapFogOfWar.cs" />
     <Compile Include="Assets\Scripts\TankRigUpdater.cs" />
     <Compile Include="Assets\Scripts\AI\EnemyBehavior.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
@@ -148,8 +151,9 @@
     <Compile Include="Assets\PostProcessing\Runtime\Components\AmbientOcclusionComponent.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\AntialiasingModel.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\DitheringModel.cs" />
-    <Compile Include="Assets\Scripts\Item.cs" />
-    <Compile Include="Assets\Scripts\UI\MiniMap\MinimapFogOfWar.cs" />
+    <Compile Include="Assets\Scripts\UI\HackingMinigame.cs" />
+    <Compile Include="Assets\Scripts\UI\HackingTile.cs" />
+    <Compile Include="Assets\Scripts\UI\Menus\EndOfLevelMenu.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />

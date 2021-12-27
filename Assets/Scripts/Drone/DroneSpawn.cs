@@ -30,14 +30,11 @@ public class DroneSpawn : MonoBehaviour
                 // enable probe upgrades
                 if (probe.upgrades.Contains(PlayerInventory.Upgrades.Sensor))
                 {
-                    GameObject sensors = new GameObject("Sensors");
-                    sensors.AddComponent<DroneSensors>();
-
-                    sensors.transform.SetParent(drone.transform);
-                    sensors.transform.localPosition = Vector3.zero;
+                    var sensors = drone.GetComponent<DroneSensors>();
+                    sensors.Radius = 10.0f;
                 }
                 if (probe.upgrades.Contains(PlayerInventory.Upgrades.Hull))
-                    drone.GetComponent<Drone>().DamageMultiplyer = 0.25f;
+                    drone.GetComponent<Drone>().MaxHealth = 16.0f;
                 if (probe.upgrades.Contains(PlayerInventory.Upgrades.Speed))
                     drone.GetComponent<UnityEngine.AI.NavMeshAgent>().speed *= 2.0f;
             }

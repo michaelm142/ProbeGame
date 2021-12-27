@@ -1,22 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // Controls the HUD elements when an drone is being controlled
 public class DroneUIController : MonoBehaviour
 {
     public GameObject healthBar;
-
+    public GameObject DamageDirectionIndicator;
     public GameObject DroneControlUIElement;
+    public GameObject HackingOverlay;
+
+    private Image damageDirectionIndicatorImage;
+    private Image healthBarImage;
+
+    private float damageIndicatorAlpha;
 
     void Awake()
     {
         CameraController.instance.OnCameraChanged.AddListener(new UnityEngine.Events.UnityAction(OnCameraChanged));
     }
 
+    private void Start()
+    {
+        damageDirectionIndicatorImage = DamageDirectionIndicator.GetComponent<Image>();
+        damageIndicatorAlpha = damageDirectionIndicatorImage.color.a;
+        healthBarImage = healthBar.GetComponent<Image>();
+    }
+
     void OnCameraChanged()
     {
         var currentCamera = CameraController.instance.ActiveCamera;
+        HackingOverlay.SetActive(false);
         if (currentCamera == null)
             return;
 
@@ -24,6 +39,7 @@ public class DroneUIController : MonoBehaviour
             healthBar.SetActive(false);
         else
             healthBar.SetActive(true);
+
     }
 
     // Update is called once per frame
@@ -32,8 +48,22 @@ public class DroneUIController : MonoBehaviour
         var drone = DroneController.Instance.ActiveDrone;
         if (drone == null)
             return;
-        
-        var bar = healthBar.GetComponent<UnityEngine.UI.Image>();
-        bar.fillAmount = drone.Health / drone.MaxHealth;
+
+        healthBarImage.fillAmount = drone.Health / drone.MaxHealth;
+        if (damageIndicatorAlpha > 0.0f)
+            damageIndicatorAlpha -= Time.deltaTime;
+        Color c = healthBarImage.color;
+        c.a = damageIndicatorAlpha;
+        damageDirectionIndicatorImage.color = c;
+    }
+
+    void OnDroneDamaged(float angle)
+    {
+        var damageOverlay = transform.Find("DamageOverlay");
+        damageOverlay.GetComponent<Animator>().SetTrigger("Trigger");
+        damageOverlay.transform.Find("RawImage").GetComponent<UnityEngine.Video.VideoPlayer>().time = 0.0f;
+
+        DamageDirectionIndicator.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        damageIndicatorAlpha = 1.0f;
     }
 }

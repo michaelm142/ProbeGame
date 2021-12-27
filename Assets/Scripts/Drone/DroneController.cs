@@ -62,7 +62,10 @@ public class DroneController : MonoBehaviour
 
     private void OnCameraChanged()
     {
-        transform.Find("ProbeStatus/HackingOverlay").gameObject.SetActive(activeDrone.hacking);
+        if (CameraController.instance.ActiveCamera == null)
+            return;
+        if (CameraController.instance.ActiveCamera.transform.parent != null && CameraController.instance.ActiveCamera.transform.parent.tag == "Player")
+            transform.Find("ProbeStatus/HackingOverlay").gameObject.SetActive(activeDrone.hacking);
     }
 
     private bool first = true;
@@ -104,8 +107,7 @@ public class DroneController : MonoBehaviour
         moveAxisPrev = moveAxis;
     }
 
-    // referenced by unity messages
-    private void DroneDamaged(Drone drone)
+    public void DroneDamaged(Drone drone, Vector3 position)
     {
         if (activeDrone == null || activeDrone != drone)
         {
@@ -114,9 +116,9 @@ public class DroneController : MonoBehaviour
         }
         else
         {
-            var damageOverlay = transform.Find("DamageOverlay");
-            damageOverlay.GetComponent<Animator>().SetTrigger("Trigger");
-            damageOverlay.transform.Find("RawImage").GetComponent<UnityEngine.Video.VideoPlayer>().time = 0.0f;
+            Vector3 direction = position - drone.transform.position;
+
+            GetComponentInChildren<DroneUIController>().SendMessage("OnDroneDamaged", Vector3.Angle(direction, drone.transform.forward) * (Vector3.Dot(drone.transform.right, direction) < 0 ? 1.0f : -1.0f)) ;
         }
     }
 

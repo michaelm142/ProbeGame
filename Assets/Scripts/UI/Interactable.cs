@@ -53,7 +53,11 @@ public class Interactable : MonoBehaviour
     Vector3 GetScreenPosition(Vector3 worldPosition)
     {
         if (CameraController.instance == null || CameraController.instance.ActiveCamera == null) return Vector3.zero;
-        return CameraController.instance.ActiveCamera.WorldToScreenPoint(worldPosition) - Vector3.up * (Screen.height / 2.0f) - Vector3.right * (Screen.width / 2.0f);
+        Vector3 point = CameraController.instance.ActiveCamera.WorldToScreenPoint(worldPosition) - Vector3.up * (Screen.height / 2.0f) - Vector3.right * (Screen.width / 2.0f);
+
+        point.y = Mathf.Clamp(point.y, -Screen.height * 0.25f, Screen.height * 0.5f);
+
+        return point;
     }
 
     private void OnDestroy()

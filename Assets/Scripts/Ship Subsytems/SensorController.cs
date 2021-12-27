@@ -26,6 +26,7 @@ public class SensorController : MonoBehaviour
 
     void Interact()
     {
+        FindObjectOfType<MinimapFogOfWar>().GetComponent<UnityEngine.UI.RawImage>().enabled = false;
         DroneController.Instance.ConnectDrone(gameObject);
         foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
             enemy.GetComponent<MiniMapIcon>().enabled = true;

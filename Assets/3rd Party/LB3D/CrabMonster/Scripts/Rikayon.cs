@@ -59,7 +59,7 @@ public class Rikayon : MonoBehaviour
         Vector3 velocity = agent.velocity;
         Vector3 deltaVelocity = velocityPrev - velocity;
 
-        if (currentAnimationState != "Walk_Cycle_1" && velocity.magnitude > 0.1f)
+        if (currentAnimationState != "Walk_Cycle_1" && currentAnimationState != "Attack" && velocity.magnitude > 0.1f)
         {
             currentAnimationState = "Walk_Cycle_1";
             triggerAnimation = true;
@@ -99,6 +99,6 @@ public class Rikayon : MonoBehaviour
 
     public void DoDamage(float damage)
     {
-        if (currentTarget != null) currentTarget.SendMessage("Damage", damage, SendMessageOptions.DontRequireReceiver);
+        if (currentTarget != null) currentTarget.SendMessage("Damage", new object[] { damage, transform.position }, SendMessageOptions.DontRequireReceiver);
     }
 }

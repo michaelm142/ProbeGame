@@ -64,7 +64,6 @@ public class MinimapFogOfWar : MonoBehaviour
             Rect rect = rectTransform.rect;
 
             Vector3 position = MinimapIconManager.instance.GetMapPosition(drones[i].transform.position) + Vector3.right * (rect.width * 0.5f) + Vector3.up * (rect.height * 0.5f);
-            Debug.Log(position);
             // TODO: calculate drone LOS
             float range = 25.0f;
 
