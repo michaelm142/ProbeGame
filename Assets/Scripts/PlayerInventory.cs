@@ -31,7 +31,7 @@ public class PlayerInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(string.Format("Number of probes:{0}", probes.Count));
+
         
     }
 

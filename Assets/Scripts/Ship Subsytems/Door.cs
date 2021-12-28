@@ -70,12 +70,18 @@ public class Door : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (!Locked && (other.tag == "Player" || other.tag == "Enemy"))
+        {
             State = DoorState.Open;
+            mapIcon.MapIcon.GetComponent<Animator>().SetBool("Open", true);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
         if (!Locked && (other.tag == "Player" || other.tag == "Enemy"))
+        {
             State = DoorState.Closed;
+            mapIcon.MapIcon.GetComponent<Animator>().SetBool("Open", false);
+        }
     }
 
     /// <summary>

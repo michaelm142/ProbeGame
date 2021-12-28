@@ -7,6 +7,7 @@ TagManager:
   - SecurityCamera
   - Enemy
   - Interactable
+  - AiWaypoint
   layers:
   - Default
   - TransparentFX

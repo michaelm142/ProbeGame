@@ -143,7 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba67e2180961cf44bc03b3cbb2eb739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Icon: {fileID: 2800000, guid: 8ce680e5ab540024a85ef4a5fde38b02, type: 3}
+  PrefabOverride: {fileID: 0}
+  Icon: {fileID: 2800000, guid: 21b8718211914f043a164dc606f27888, type: 3}
   Color: {r: 1, g: 1, b: 1, a: 1}
   RotateWithObject: 0
   RaycastTarget: 1

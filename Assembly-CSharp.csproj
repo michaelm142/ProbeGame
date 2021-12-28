@@ -154,6 +154,10 @@
     <Compile Include="Assets\Scripts\UI\HackingMinigame.cs" />
     <Compile Include="Assets\Scripts\UI\HackingTile.cs" />
     <Compile Include="Assets\Scripts\UI\Menus\EndOfLevelMenu.cs" />
+    <Compile Include="Assets\Scripts\Resource.cs" />
+    <Compile Include="Assets\Scripts\AI\Attack.cs" />
+    <Compile Include="Assets\Scripts\Pathwalker.cs" />
+    <Compile Include="Assets\Scripts\AI\Patrol.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />

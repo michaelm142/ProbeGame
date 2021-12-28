@@ -11,9 +11,19 @@ public class EnemyBehavior : MonoBehaviour
 
     public NavMeshAgent agent { get; private set; }
 
+    public Vector3 startPosition { get; private set; }
+
     public GameObject currentTarget;
 
     private AiState currentState;
+
+    public enum StartingState
+    {
+        Idle,
+        Patrol,
+    }
+
+    public StartingState startingState;
 
     // Start is called before the first frame update
     void Start()
@@ -21,20 +31,24 @@ public class EnemyBehavior : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = AttackRadius;
 
-        currentState = new Idle(this);
+        if (startingState == StartingState.Idle)
+            currentState = new Idle(this);
+        else
+            currentState = new Patrol(this);
+
+        startPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         currentState.Update();
-        //Debug.Log(currentState.ToString());
-
+        Debug.Log(currentState);
         if (currentTarget != null && Vector3.Distance(currentTarget.transform.position, transform.position) < AttackRadius)
             gameObject.BroadcastMessage("Attack", SendMessageOptions.DontRequireReceiver);
     }
 
-    public void SetCurrentState(AiState state)
+    public void PushCurrentState(AiState state)
     {
         state.previous = currentState;
         currentState = state;
@@ -60,7 +74,7 @@ public class EnemyBehavior : MonoBehaviour
 public abstract class AiState
 {
     protected Transform transform { get { return gameObject.transform; } }
-    
+
     protected GameObject gameObject;
 
     public AiState previous;

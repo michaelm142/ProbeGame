@@ -19,7 +19,7 @@ public class MinimapIconManager : MonoBehaviour
         }
     }
 
-        private Camera minimapCamera
+    private Camera minimapCamera
     {
         get { return GetComponent<MiniMapClickNavigation>().minimapCamera; }
     }
@@ -58,11 +58,18 @@ public class MinimapIconManager : MonoBehaviour
     }
 
 
-    public Transform AddIcon(MiniMapIcon mapIcon)
+    public Transform AddIcon(MiniMapIcon mapIcon, GameObject prefabOverride = null)
     {
-        GameObject Icon = Instantiate(IconPrefab, transform);
-        Icon.GetComponent<Image>().sprite = Sprite.Create(mapIcon.Icon, Rect.MinMaxRect(0, 0, mapIcon.Icon.width, mapIcon.Icon.height), Vector2.one * 0.5f);
-        Icon.GetComponent<Image>().raycastTarget = mapIcon.RaycastTarget;
+        GameObject Icon = null;
+        if (prefabOverride == null)
+            Icon = Instantiate(IconPrefab, transform);
+        else
+            Icon = Instantiate(prefabOverride, transform);
+        if (mapIcon.Icon != null)
+        {
+            Icon.GetComponent<Image>().sprite = Sprite.Create(mapIcon.Icon, Rect.MinMaxRect(0, 0, mapIcon.Icon.width, mapIcon.Icon.height), Vector2.one * 0.5f);
+            Icon.GetComponent<Image>().raycastTarget = mapIcon.RaycastTarget;
+        }
         if (mapIcon.OnClicked == null)
             Icon.GetComponent<Button>().interactable = false;
         else

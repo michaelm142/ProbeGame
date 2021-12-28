@@ -97,9 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba67e2180961cf44bc03b3cbb2eb739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Icon: {fileID: 2800000, guid: 2cb65856c7fc56b4cb9af7b11992dc96, type: 3}
+  PrefabOverride: {fileID: 4157505312945494873, guid: dbc7109c18ce46147b67eea27aa5481c,
+    type: 3}
+  Icon: {fileID: 0}
   Color: {r: 1, g: 1, b: 1, a: 1}
-  RotateWithObject: 0
+  RotateWithObject: 1
   RaycastTarget: 1
   OnClicked:
     m_PersistentCalls:
@@ -131,7 +133,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20.23, y: 6.2235374, z: 7.2}
+  m_Size: {x: 20.23, y: 6.2235374, z: 17.3}
   m_Center: {x: 0, y: 2.6117687, z: 0}
 --- !u!1001 &97554939489274315
 PrefabInstance:

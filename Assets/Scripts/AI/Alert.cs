@@ -43,9 +43,7 @@ public class Alert : AiState
         coolDownTimer -= Time.deltaTime;
         if (coolDownTimer <= 0.0f)
         {
-
             behavior.ReturnToPreviousState();
-            agent.SetDestination(transform.position);
             return;
         }
 
@@ -65,6 +63,10 @@ public class Alert : AiState
                 randomPosition = GetRandomPosition();
         }
         else
-            behavior.SetCurrentState(new Idle(behavior));
+        {
+            targets.Sort(TargetHeruistic);
+            var target = targets[0];
+            behavior.PushCurrentState(new Attack(behavior, target));
+        }
     }
 }

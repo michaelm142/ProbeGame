@@ -7,6 +7,8 @@ public class MiniMapIcon : MonoBehaviour
 {
     public GameObject MapIcon { get; set; }
 
+    public GameObject PrefabOverride;
+
     public Texture2D Icon;
 
     public Color Color = Color.white;
@@ -23,7 +25,7 @@ public class MiniMapIcon : MonoBehaviour
 
     public void Start()
     {
-        MapObjects.Add(FindObjectOfType<MinimapIconManager>().AddIcon(this));
+        MapObjects.Add(FindObjectOfType<MinimapIconManager>().AddIcon(this, PrefabOverride));
     }
 
     private void OnDestroy()
