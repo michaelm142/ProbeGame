@@ -19,7 +19,7 @@ public class Interactable : MonoBehaviour
     {
         interactableButtonPrefab = Resources.Load<GameObject>("UI/Interaction");
 
-        icon = Instantiate(interactableButtonPrefab, GameObject.Find("Canvas/InteractionSystem").transform);
+        icon = Instantiate(interactableButtonPrefab, GameObject.Find("HUD/InteractionSystem").transform);
         if (OnInteract == null)
             Destroy(icon.GetComponent<Button>());
         else

@@ -8,11 +8,12 @@ public class PlayerInventory : MonoBehaviour
     public List<Probe> probes = new List<Probe>();
 
     public int NumStartProbes;
-    public float Fuel;
     public float Energy;
     public float Metal;
 
     private List<Button> buyProbesButtons;
+
+    public System.IO.FileInfo activeSaveFile;
 
     // Start is called before the first frame update
     void Start()

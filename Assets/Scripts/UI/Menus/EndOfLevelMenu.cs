@@ -5,52 +5,80 @@ using UnityEngine.UI;
 
 public class EndOfLevelMenu : MonoBehaviour
 {
-    public Text totalEnergy;
-    public Text totalFuel;
-    public Text totalMetal;
+    public Text Energy;
+    public Text Metal;
+    public Text TotalMetal;
 
+    public bool tallyingEnergy;
+    public bool tallyingMetal;
+    public bool TotalingMetal;
+    public bool FactoringEnergy;
     public float Duration = 5.0f;
 
     private string totalEnergyText;
-    private string totalFuelText;
     private string totalMetalText;
+    private string MetalText;
 
+    private float totalMetalCount;
     private float energyCount;
-    private float fuelCount;
     private float metalCount;
 
     private float energyRate;
-    private float fuelRate;
     private float metalRate;
+    private float totalMetalRate;
+
+    private float totalMetalValue;
+    private float metalValue;
+    private float energyValue;
 
     // Start is called before the first frame update
     void Start()
     {
-        totalEnergyText = totalEnergy.text;
-        totalFuelText = totalFuel.text;
-        totalMetalText = totalMetal.text;
+        totalEnergyText = Energy.text;
+        MetalText = Metal.text;
+        totalMetalText = TotalMetal.text;
 
-        var inventory = FindObjectOfType<PlayerInventory>();
-        energyRate = inventory.Energy / Duration;
-        fuelRate = inventory.Fuel / Duration;
-        metalRate = inventory.Metal / Duration; 
+        foreach (var inventory in FindObjectsOfType<DroneInventory>())
+        {
+            energyValue += inventory.Energy;
+            metalValue += inventory.Metal;
+        }
+        energyRate = energyValue / Duration;
+        metalRate = metalValue / Duration;
+        totalMetalValue = (metalValue + energyValue * 20);
+        totalMetalRate = totalMetalValue / Duration;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var inventory = FindObjectOfType<PlayerInventory>();
-        if (energyCount < inventory.Energy)
+        if (tallyingEnergy && !FactoringEnergy && energyCount < energyValue)
             energyCount += Time.deltaTime * energyRate;
-        if (fuelCount < inventory.Fuel)
-            fuelCount += Time.deltaTime * fuelRate;
-        if (metalCount < inventory.Metal)
+        if (tallyingMetal && !TotalingMetal && !FactoringEnergy && metalCount < metalValue)
             metalCount += Time.deltaTime * metalRate;
+        if (FactoringEnergy)
+        {
+            if (metalCount > 0.0f)
+                metalCount -= Time.deltaTime * metalRate;
+            if (energyCount > 0.0f)
+                energyCount -= Time.deltaTime * energyRate;
+            if (totalMetalCount < totalMetalValue)
+                totalMetalCount += Time.deltaTime * totalMetalRate;
+        }
+        if (TotalingMetal && totalMetalCount < metalCount)
+        {
+            metalCount -= Time.deltaTime * metalRate;
+            totalMetalCount += Time.deltaTime * metalRate;
+            if (totalMetalCount >= metalCount)
+            {
+                TotalingMetal = false;
+                FactoringEnergy = true;
+            }
+        }
 
-        totalEnergy.text = string.Format(totalEnergyText, Mathf.Round(energyCount));
-        totalFuel.text = string.Format(totalFuelText, Mathf.Round(fuelCount));
-        totalMetal.text = string.Format(totalMetalText, Mathf.Round(metalCount));
-
+        Energy.text = string.Format(totalEnergyText, Mathf.Round(energyCount));
+        Metal.text = string.Format(MetalText, Mathf.Round(metalCount));
+        TotalMetal.text = string.Format(totalMetalText, Mathf.Round(totalMetalCount));
     }
 
 }

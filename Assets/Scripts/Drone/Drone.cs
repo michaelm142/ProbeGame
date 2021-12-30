@@ -31,6 +31,21 @@ public class Drone : MonoBehaviour
         Health = MaxHealth;
     }
 
+    private void Start()
+    {
+        var di = gameObject.AddComponent<DroneInventory>();
+    }
+
+    private void OnDestroy()
+    {
+        var di = GetComponent<DroneInventory>();
+        var obj = new GameObject("Drone Inventory");
+        DontDestroyOnLoad(obj);
+        var obj_di = obj.AddComponent<DroneInventory>();
+        obj_di.Energy = di.Energy;
+        obj_di.Metal = di.Metal;
+    }
+
     // Update is called once per frame
     void Update()
     {
