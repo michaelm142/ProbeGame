@@ -30,8 +30,13 @@ public class DoorControler : MonoBehaviour
 
     public void Interact()
     {
-        enabled = !enabled;
+        enabled = true;
         DroneController.Instance.ConnectDrone(gameObject);
+    }
+
+    void Disconnect()
+    {
+        enabled = false;
     }
 
     public void AddDoor(Door door)

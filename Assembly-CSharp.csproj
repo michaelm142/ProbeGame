@@ -102,6 +102,7 @@
     <Compile Include="Assets\Scripts\UI\GetNativeResolutions.cs" />
     <Compile Include="Assets\Scripts\AI\Idle.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\TDScene.cs" />
+    <Compile Include="Assets\Scripts\Drone\DroneGunAim.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\PostProcessingProfile.cs" />
     <Compile Include="Assets\Scripts\UI\DroneUIController.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\TDZoneTrigger.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Assets\Scripts\Pathwalker.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\TDZone.cs" />
     <Compile Include="Assets\Scripts\UI\Menus\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\Drone\DroneInventory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Components\FogComponent.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\BloomModel.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\DepthOfFieldModel.cs" />
@@ -190,9 +192,10 @@
     <Compile Include="Assets\Scripts\UI\InteractionSystem.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Components\AmbientOcclusionComponent.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\TDGroup.cs" />
+    <Compile Include="Assets\Scripts\UI\TickerText.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\AntialiasingModel.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\DitheringModel.cs" />
-    <Compile Include="Assets\Scripts\Drone\DroneInventory.cs" />
+    <Compile Include="Assets\Scripts\UI\Menus\MessageBox.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />

@@ -25,6 +25,11 @@ public class MainMenu : MonoBehaviour
     {
     }
 
+    public void ContinueGame()
+    {
+        MessageBox.Show("Continue game is not currently implemented");
+    }
+
     public void BeginNewGame()
     {
         state = MainMenuState.NewGame;

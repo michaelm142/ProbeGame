@@ -107,6 +107,13 @@ public class DroneController : MonoBehaviour
         moveAxisPrev = moveAxis;
     }
 
+    public void DroneDestroyed(Drone drone)
+    {
+        drones.Remove(drone);
+        var destoryedIndicator = Instantiate(Resources.Load<GameObject>("UI/PlayerDestroyedIndicator"));
+        destoryedIndicator.transform.position = drone.transform.position;
+    }
+
     public void DroneDamaged(Drone drone, Vector3 position)
     {
         if (activeDrone == null || activeDrone != drone)

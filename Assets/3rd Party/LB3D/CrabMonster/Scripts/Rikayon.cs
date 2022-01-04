@@ -35,6 +35,7 @@ public class Rikayon : MonoBehaviour
         currentAnimationState = "Rest_1";
         animator = GetComponent<Animator>();
         source = gameObject.AddComponent<AudioSource>();
+        source.spatialBlend = 1.0f;
     }
 
     // Update is called once per frame

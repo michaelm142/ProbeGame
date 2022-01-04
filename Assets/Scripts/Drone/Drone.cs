@@ -18,6 +18,7 @@ public class Drone : MonoBehaviour
     public float Health;
 
     public bool hacking { get { return connectedSubsystem != null; } }
+    bool ignoreDestroy;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,6 +30,13 @@ public class Drone : MonoBehaviour
         selectRing.SetActive(false);
         GetComponent<MiniMapIcon>().MapObjects.Add(selectRing.transform);
         Health = MaxHealth;
+
+        Application.quitting += Application_quitting;
+    }
+
+    private void Application_quitting()
+    {
+        ignoreDestroy = true;
     }
 
     private void Start()
@@ -38,12 +46,16 @@ public class Drone : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (ignoreDestroy)
+            return;
         var di = GetComponent<DroneInventory>();
         var obj = new GameObject("Drone Inventory");
         DontDestroyOnLoad(obj);
         var obj_di = obj.AddComponent<DroneInventory>();
         obj_di.Energy = di.Energy;
         obj_di.Metal = di.Metal;
+
+        FindObjectOfType<DroneController>().DroneDestroyed(this);
     }
 
     // Update is called once per frame

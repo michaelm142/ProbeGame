@@ -87,7 +87,7 @@ public class MinimapIconManager : MonoBehaviour
 
     public void RemoveIcon(MiniMapIcon mapIcon)
     {
-        Destroy(mapIcon.MapIcon);
+        DestroyImmediate(mapIcon.MapIcon);
         trackedObjects.Remove(mapIcon);
     }
 

@@ -97,6 +97,7 @@
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\Editor\TDzonecustomInspector.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Monitors\WaveformMonitor.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\Editor\TDActiveElementCustinspector.cs" />
+    <Compile Include="Assets\Scripts\Editor\HackingMinigameEditor.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Models\ChromaticAberrationEditor.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Models\DitheringModelEditor.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Monitors\VectorscopeMonitor.cs" />
