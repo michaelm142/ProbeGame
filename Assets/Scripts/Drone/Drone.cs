@@ -11,8 +11,8 @@ public class Drone : MonoBehaviour
 {
     public Camera Camera { get; private set; }
 
-    private GameObject selectRing;
     public GameObject connectedSubsystem;
+    private static GameObject ExplosionPrefab;
 
     public float MaxHealth = 30.0f;
     public float Health;
@@ -26,12 +26,12 @@ public class Drone : MonoBehaviour
         Camera = transform.GetComponentInChildren<Camera>();
 
         var ring = Resources.Load<Texture2D>("SelectRing");
-        selectRing = MinimapIconManager.instance.AddIcon(ring, Color.white).gameObject;
-        selectRing.SetActive(false);
-        GetComponent<MiniMapIcon>().MapObjects.Add(selectRing.transform);
         Health = MaxHealth;
 
         Application.quitting += Application_quitting;
+
+        if (ExplosionPrefab == null)
+            ExplosionPrefab = Resources.Load<GameObject>("Effects/DroneExplode");
     }
 
     private void Application_quitting()
@@ -62,25 +62,23 @@ public class Drone : MonoBehaviour
     void Update()
     {
         var clickNavigation = FindObjectOfType<MiniMapClickNavigation>();
-        if (clickNavigation.ActiveDrone == this)
-            selectRing.SetActive(true);
-        else
-            selectRing.SetActive(false);
 
         if (Health <= 0.0f)
+        {
+            var explosion = Instantiate(ExplosionPrefab);
+            explosion.transform.position = transform.position;
             Destroy(gameObject);
+        }
     }
 
     public void SetActive()
     {
-        selectRing.SetActive(true);
         CameraController.instance.ActiveCamera = Camera;
     }
 
     public void SetInactive()
     {
         CameraController.instance.ActiveCamera = null;
-        selectRing.SetActive(false);
     }
 
     public void Damage(object[] info)

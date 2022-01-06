@@ -27,16 +27,59 @@ public class DroneSpawn : MonoBehaviour
                 drone.transform.position = spawnPoints[i].position;
                 drone.transform.rotation = spawnPoints[i].rotation;
 
+                var opticsUpgrade = probe.upgrades.Find(u => u.type == DroneUpgradeType.Optics);
                 // enable probe upgrades
-                if (probe.upgrades.Contains(PlayerInventory.Upgrades.Sensor))
+                if (opticsUpgrade != null)
                 {
                     var sensors = drone.GetComponent<DroneSensors>();
-                    sensors.Radius = 10.0f;
+                    switch (opticsUpgrade.Level)
+                    {
+
+                        case 1:
+                            sensors.Radius = 10.0f;
+                            break;
+                        case 2:
+                            sensors.Radius = 15.0f;
+                            break;
+                        case 3:
+                            sensors.Radius = 30.0f;
+                            break;
+                    }
                 }
-                if (probe.upgrades.Contains(PlayerInventory.Upgrades.Hull))
-                    drone.GetComponent<Drone>().MaxHealth = 16.0f;
-                if (probe.upgrades.Contains(PlayerInventory.Upgrades.Speed))
-                    drone.GetComponent<UnityEngine.AI.NavMeshAgent>().speed *= 2.0f;
+                var hullUpgrade = probe.upgrades.Find(u => u.type == DroneUpgradeType.Hull);
+                if (hullUpgrade != null)
+                {
+                    switch (hullUpgrade.Level)
+                    {
+                        case 1:
+                            drone.GetComponent<Drone>().MaxHealth = 16.0f;
+                            break;
+                        case 2:
+                            drone.GetComponent<Drone>().MaxHealth = 32.0f;
+                            break;
+                        case 3:
+                            drone.GetComponent<Drone>().MaxHealth = 48.0f;
+                            break;
+                    }
+
+                    drone.GetComponent<Drone>().Health = drone.GetComponent<Drone>().MaxHealth;
+                }
+                var speedUpgrade = probe.upgrades.Find(u => u.type == DroneUpgradeType.Speed);
+                if (speedUpgrade != null)
+                {
+                    switch (speedUpgrade.Level)
+                    {
+                        case 1:
+                            drone.GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 3.5f;
+                            break;
+                        case 2:
+                            drone.GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 5.0f;
+                            break;
+                        case 3:
+                            drone.GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 7.0f;
+                            break;
+                    }
+                }
             }
         }
     }

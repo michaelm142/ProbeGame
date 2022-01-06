@@ -27,7 +27,18 @@ public class MainMenu : MonoBehaviour
 
     public void ContinueGame()
     {
-        MessageBox.Show("Continue game is not currently implemented");
+        DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
+        var saveFiles = dir.GetFiles().ToList().FindAll(f => f.Extension.IndexOf(".slot") != -1);
+        saveFiles.Sort(delegate (FileInfo a, FileInfo b)
+        {
+            if (b.CreationTime.Ticks > a.CreationTime.Ticks)
+                return -1;
+
+            return 0;
+        });
+
+        var inventory = FindObjectOfType<LoadSave>().LoadProgress(saveFiles[0].FullName);
+        inventory.activeSaveFile = saveFiles[0];
     }
 
     public void BeginNewGame()

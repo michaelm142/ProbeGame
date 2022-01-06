@@ -25,18 +25,6 @@ public class Door : MonoBehaviour
         anim = GetComponent<Animator>();
         mapIcon = GetComponent<MiniMapIcon>();
         mapIcon.OnClicked.AddListener(delegate { FindObjectOfType<DoorControler>().ToggleDoorLocked(this); });
-
-        var doorController = FindObjectOfType<DoorControler>();
-        doorController.AddDoor(this);
-    }
-
-    private void OnDestroy()
-    {
-        var doorController = FindObjectOfType<DoorControler>();
-        if (doorController == null)
-            return;
-
-        doorController.RemoveDoor(this);
     }
 
     // Update is called once per frame
@@ -72,7 +60,8 @@ public class Door : MonoBehaviour
         if (!Locked && (other.tag == "Player" || other.tag == "Enemy"))
         {
             State = DoorState.Open;
-            mapIcon.MapIcon.GetComponent<Animator>().SetBool("Open", true);
+            if (FindObjectOfType<DoorControler>().enabled)
+                mapIcon.MapIcon.GetComponent<Animator>().SetBool("Open", true);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -80,7 +69,8 @@ public class Door : MonoBehaviour
         if (!Locked && (other.tag == "Player" || other.tag == "Enemy"))
         {
             State = DoorState.Closed;
-            mapIcon.MapIcon.GetComponent<Animator>().SetBool("Open", false);
+            if (FindObjectOfType<DoorControler>().enabled)
+                mapIcon.MapIcon.GetComponent<Animator>().SetBool("Open", false);
         }
     }
 

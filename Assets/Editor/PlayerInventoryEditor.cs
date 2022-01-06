@@ -17,22 +17,22 @@ public class PlayerInventoryEditor : Editor
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.LabelField(string.Format("Probe:{0}", i));
-                if (probe.upgrades.Contains(PlayerInventory.Upgrades.Optics))
+                if (probe.upgrades.Find(u => u.type == DroneUpgradeType.Optics) != null)
                     EditorGUILayout.Toggle(true);
                 else
                     EditorGUILayout.Toggle(false);
 
-                if (probe.upgrades.Contains(PlayerInventory.Upgrades.Hull))
+                if (probe.upgrades.Find(u => u.type == DroneUpgradeType.Hull) != null)
                     EditorGUILayout.Toggle(true);
                 else
                     EditorGUILayout.Toggle(false);
 
-                if (probe.upgrades.Contains(PlayerInventory.Upgrades.Sensor))
+                if (probe.upgrades.Find(u => u.type == DroneUpgradeType.Sensor) != null)
                     EditorGUILayout.Toggle(true);
                 else
                     EditorGUILayout.Toggle(false);
 
-                if (probe.upgrades.Contains(PlayerInventory.Upgrades.Speed))
+                if (probe.upgrades.Find(u => u.type == DroneUpgradeType.Speed) != null)
                     EditorGUILayout.Toggle(true);
                 else
                     EditorGUILayout.Toggle(false);

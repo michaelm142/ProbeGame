@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +7,11 @@ public class DoorControler : MonoBehaviour
     private List<Door> doors = new List<Door>();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        doors = FindObjectsOfType<Door>().ToList();
+        foreach (var door in doors)
+            door.GetComponent<MiniMapIcon>().enabled = false;
     }
 
     // Update is called once per frame
@@ -31,21 +33,15 @@ public class DoorControler : MonoBehaviour
     public void Interact()
     {
         enabled = true;
+        foreach (Door d in doors)
+            d.GetComponent<MiniMapIcon>().enabled = true;
         DroneController.Instance.ConnectDrone(gameObject);
     }
 
     void Disconnect()
     {
+        foreach (Door d in doors)
+            d.GetComponent<MiniMapIcon>().enabled = false;
         enabled = false;
-    }
-
-    public void AddDoor(Door door)
-    {
-        doors.Add(door);
-    }
-
-    public void RemoveDoor(Door door)
-    {
-        doors.Remove(door);
     }
 }

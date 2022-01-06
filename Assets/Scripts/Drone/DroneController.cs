@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -51,11 +52,9 @@ public class DroneController : MonoBehaviour
         {
             Drone drone = d;
             d.GetComponent<MiniMapIcon>().OnClicked.AddListener(new UnityEngine.Events.UnityAction(delegate () { ActiveDrone = drone; }));
+            d.Camera.enabled = false;
             drones.Add(d);
         }
-
-        foreach (var drone in Drones)
-            drone.Camera.enabled = false;
 
         CameraController.instance.OnCameraChanged.AddListener(OnCameraChanged);
     }
@@ -75,6 +74,17 @@ public class DroneController : MonoBehaviour
     {
         if (first)
         {
+            if (drones.Count == 0)
+            {
+                foreach (var d in FindObjectsOfType<Drone>())
+                {
+                    Drone drone = d;
+                    d.GetComponent<MiniMapIcon>().OnClicked.AddListener(new UnityEngine.Events.UnityAction(delegate () { ActiveDrone = drone; }));
+                    d.Camera.enabled = false;
+                    drones.Add(d);
+                }
+            }
+
             ActiveDrone = drones[0];
             first = false;
         }

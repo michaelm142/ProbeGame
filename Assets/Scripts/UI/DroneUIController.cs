@@ -13,6 +13,9 @@ public class DroneUIController : MonoBehaviour
 
     private Image damageDirectionIndicatorImage;
     private Image healthBarImage;
+    public Image energyBar;
+
+    public Text MetalCount;
 
     private float damageIndicatorAlpha;
 
@@ -48,6 +51,17 @@ public class DroneUIController : MonoBehaviour
         var drone = DroneController.Instance.ActiveDrone;
         if (drone == null)
             return;
+
+        int totalMetal = 0;
+        float totalEnergy = 0.0f;
+        foreach (var d in FindObjectsOfType<DroneInventory>())
+        {
+            totalMetal += (int)d.Metal;
+            totalEnergy += d.Energy;
+        }
+        energyBar.fillAmount = Mathf.Clamp(totalEnergy, 0.0f, 100.0f) / 100.0f;
+        MetalCount.text = (totalMetal < 10000 ? "0" : "") + (totalMetal < 1000 ? "0" : "") + (totalMetal < 100 ? "0" : "") + (totalMetal < 10 ? "0" : "") + totalMetal.ToString();
+
 
         healthBarImage.fillAmount = drone.Health / drone.MaxHealth;
         if (damageIndicatorAlpha > 0.0f)

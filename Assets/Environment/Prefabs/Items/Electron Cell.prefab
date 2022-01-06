@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 25
-  type: 1
+  type: 0
 --- !u!1001 &3103867215897783387
 PrefabInstance:
   m_ObjectHideFlags: 0

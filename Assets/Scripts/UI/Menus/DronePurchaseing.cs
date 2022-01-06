@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class DronePurchaseing : MonoBehaviour
 {
-    private Button purchasingButton;
+    private const int MaxLevels = 3;
 
-    private PlayerInventory.Probe probe;
+    public Text UpgradeInformationLabel;
+
+    public PlayerInventory.Drone probe { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        purchasingButton = GetComponentInChildren<Button>();
-        purchasingButton.onClick.AddListener(new UnityEngine.Events.UnityAction(BuyProbe));
     }
 
     // Update is called once per frame
@@ -28,13 +28,15 @@ public class DronePurchaseing : MonoBehaviour
             return;
 
         probe = FindObjectOfType<PlayerInventory>().BuyProbe();
-        purchasingButton.interactable = false;
     }
 
-    public void UpgradeProbe(int index)
+    public void UpgradeProbe(int type)
     {
-        PlayerInventory.Upgrades upgrade = (PlayerInventory.Upgrades)index;
-        if (!probe.upgrades.Contains(upgrade))
-            probe.upgrades.Add(upgrade);
+        DroneUpgradeType t = (DroneUpgradeType)type;
+        var upgrade = probe.upgrades.Find(u => u.type == t);
+        if (upgrade == null)
+            probe.upgrades.Add(new DroneUpgrade(t));
+        else if (upgrade.Level < MaxLevels)
+            upgrade.Level++;
     }
 }

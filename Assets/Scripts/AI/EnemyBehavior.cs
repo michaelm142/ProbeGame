@@ -63,11 +63,11 @@ public class EnemyBehavior : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        Vector3 rightPoint = transform.position + transform.right;
-        Vector3 leftPoint = transform.position - transform.right;
-        Debug.DrawLine(rightPoint, rightPoint + transform.forward * LOS);
-        Debug.DrawLine(rightPoint + transform.forward * LOS, leftPoint + transform.forward * LOS);
-        Debug.DrawLine(leftPoint + transform.forward * LOS, leftPoint);
+        //Vector3 rightPoint = transform.position + transform.right;
+        //Vector3 leftPoint = transform.position - transform.right;
+        //Debug.DrawLine(rightPoint, rightPoint + transform.forward * LOS);
+        //Debug.DrawLine(rightPoint + transform.forward * LOS, leftPoint + transform.forward * LOS);
+        //Debug.DrawLine(leftPoint + transform.forward * LOS, leftPoint);
     }
 }
 

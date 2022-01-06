@@ -5,6 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class MenuControls : MonoBehaviour
 {
+    public void LoadLevelAsync(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
+    public void LoadLevel(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
+
     public void LoadLevel (int index)
     {
         SceneManager.LoadScene(index);
@@ -12,6 +21,6 @@ public class MenuControls : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadSceneAsync(2);
     }
 }

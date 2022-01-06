@@ -61,7 +61,7 @@ public class MiniMapClickNavigation : MonoBehaviour, IPointerDownHandler
         samplePos.y *= sampleBuffer.height;
         if (pixelBuffer[(int)samplePos.x + (int)samplePos.y * sampleBuffer.width].a == 0 && !ActiveDrone.hacking)
         {
-             if (!IgnoreNextClick)
+             if (!IgnoreNextClick && agent != null)
                 agent.SetDestination(minimapCamera.transform.position + vertical + horizontal);
             else
                 IgnoreNextClick = false;

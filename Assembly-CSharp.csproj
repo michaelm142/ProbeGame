@@ -150,6 +150,7 @@
     <Compile Include="Assets\Scripts\TankRigUpdater.cs" />
     <Compile Include="Assets\Scripts\AI\EnemyBehavior.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
+    <Compile Include="Assets\Scripts\UI\Menus\MessageBox.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
     <Compile Include="Assets\Scripts\AudioListenerControl.cs" />
     <Compile Include="Assets\Scripts\Drone\Drone.cs" />
@@ -195,7 +196,7 @@
     <Compile Include="Assets\Scripts\UI\TickerText.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\AntialiasingModel.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\DitheringModel.cs" />
-    <Compile Include="Assets\Scripts\UI\Menus\MessageBox.cs" />
+    <Compile Include="Assets\Scripts\UI\ProbeStoreUpgrade.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />

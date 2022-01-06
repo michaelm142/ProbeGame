@@ -8,10 +8,9 @@ using UnityEngine;
 
 public class LoadSave : MonoBehaviour
 {
-    public PlayerInventory LoadProgress(int slotIndex)
+    public PlayerInventory LoadProgress(string filename)
     {
-        DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
-        FileInfo file = dir.GetFiles().ToList().Find(f => f.Extension == string.Format(".slot{0}", slotIndex));
+        FileInfo file = new FileInfo(filename);
         if (file == null || !file.Exists)
             throw new InvalidOperationException("Requested file could not be found");
 
@@ -34,13 +33,20 @@ public class LoadSave : MonoBehaviour
         var probeNodes = root.SelectNodes("Probe");
         foreach (XmlElement probeNode in probeNodes)
         {
-            PlayerInventory.Probe probe = new PlayerInventory.Probe();
-                
-            foreach (PlayerInventory.Upgrades upgrade in Enum.GetValues(typeof(PlayerInventory.Upgrades)))
+            PlayerInventory.Drone probe = new PlayerInventory.Drone();
+
+            foreach (DroneUpgradeType upgradeType in Enum.GetValues(typeof(DroneUpgradeType)))
             {
-                var upgradeNode = probeNode.SelectSingleNode(upgrade.ToString());
+                var upgradeNode = probeNode.SelectSingleNode(upgradeType.ToString()) as XmlElement;
                 if (upgradeNode != null)
-                    probe.upgrades.Add(upgrade);
+                {
+                    var upgradeLevelAttr = upgradeNode.Attributes["Level"];
+                    int level = 0;
+                    if (upgradeLevelAttr != null)
+                        level = int.Parse(upgradeLevelAttr.Value);
+
+                    probe.upgrades.Add(new DroneUpgrade(upgradeType, level));
+                }
             }
 
             playerInventory.probes.Add(probe);
@@ -48,6 +54,14 @@ public class LoadSave : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
 
         return playerInventory;
+    }
+
+    public PlayerInventory LoadProgress(int slotIndex)
+    {
+        DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
+        FileInfo file = dir.GetFiles().ToList().Find(f => f.Extension == string.Format(".slot{0}", slotIndex));
+
+        return LoadProgress(file.FullName);
     }
 
     public void SaveProgress()
@@ -72,9 +86,18 @@ public class LoadSave : MonoBehaviour
         {
             var probeNode = root.AppendChild(doc.CreateElement("Probe"));
             foreach (var upgrade in probe.upgrades)
-                probeNode.AppendChild(doc.CreateElement(upgrade.ToString()));
+            {
+                var upgradeElement = doc.CreateElement(upgrade.ToString());
+                var levelAttr = doc.CreateAttribute("Level");
+                levelAttr.Value = upgrade.Level.ToString();
+                
+                upgradeElement.Attributes.Append(levelAttr);
+                probeNode.AppendChild(upgradeElement);
+            }
         }
         
         doc.Save(file.OpenWrite());
+
+        MessageBox.Show(string.Format("Game {0} has been saved", Path.GetFileNameWithoutExtension(file.Name)));
     }
 }

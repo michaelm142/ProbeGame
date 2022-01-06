@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public List<Probe> probes = new List<Probe>();
+    public List<Drone> probes = new List<Drone>();
 
     public int NumStartProbes;
     public float Energy;
@@ -21,10 +21,10 @@ public class PlayerInventory : MonoBehaviour
         DontDestroyOnLoad(this);
 
         buyProbesButtons = FindObjectsOfType<Button>().ToList().FindAll(b => b.name == "BuyProbeButton");
-        
+
         for (int i = 0; i < NumStartProbes; i++)
         {
-            probes.Add(new Probe());
+            probes.Add(new Drone());
             buyProbesButtons[i].interactable = false;
         }
     }
@@ -33,32 +33,71 @@ public class PlayerInventory : MonoBehaviour
     void Update()
     {
 
-        
+
     }
 
-    public Probe BuyProbe()
+    public Drone BuyProbe()
     {
-        var p = new Probe();
+        var p = new Drone();
         probes.Add(p);
 
         return p;
     }
 
-    public class Probe
+    public class Drone
     {
-        public List<Upgrades> upgrades;
-        
-        public Probe()
+        public List<DroneUpgrade> upgrades;
+
+        public Drone()
         {
-            upgrades = new List<Upgrades>();
+            upgrades = new List<DroneUpgrade>();
         }
     }
+}
 
-    public enum Upgrades
+public class DroneUpgrade
+{
+    public DroneUpgradeType type;
+    public int Level;
+
+    public DroneUpgrade(DroneUpgradeType type, int Level = 1)
     {
-        Optics,
-        Hull,
-        Sensor,
-        Speed,
+        this.type = type;
+        this.Level = Level;
     }
-}     
+
+    public static Dictionary<DroneUpgradeType, string[]> UpgradeDescriptions = new Dictionary<DroneUpgradeType, string[]>()
+    {
+        { DroneUpgradeType.Hull,     new string[] 
+        { 
+            "Titanium alloy frame fortifies structural integrity.\n\nIncreaces max health to 16",
+            "Increaced armor plating around the drone hull to protect it from hostile environments.\n\nIncreases max health to 32",
+            "Anti-balistic foam insets absorb kenitc energy from incomming attacks.\n\nIncreases max health to 48",
+        }  },
+        { DroneUpgradeType.Optics,   new string[]
+        {
+            "Advanced Opical sensors increase detection and scanning capabilities",
+            "Advanced Opical sensors increase detection and scanning capabilities",
+            "Advanced Opical sensors increase detection and scanning capabilities",
+        } },
+        { DroneUpgradeType.Sensor,   new string[] 
+        { 
+            "Augmented scanner array. Scans in both radar and infrared spectral bands for more accurate target detection.\n\nIncreases detection radius to 10 meters",
+            "Advanced on-board tracking computer allows for faster target anylsys and aquisition.\n\nIncreases detection radius to 15 meters",
+            "Additional capacitors to increase signal amplitude and range.\n\nIncreaces detection radius to 30 meters",
+        } },
+        { DroneUpgradeType.Speed,    new string[] 
+        {
+            "Advanced motors and wheel kit for increaced speed.\n\nIncreaces drone speed to 3.5 meters per second",
+            "Augmented power system allows for higher output torque.\n\nIncreaces drone speed to 5 meters per second",
+            "Pnumatic-driven turbo increases motor torque.\n\nIncreases drone speed to 7 meters per second"
+        } },
+    };
+}
+public enum DroneUpgradeType
+{
+    Optics,
+    Hull,
+    Sensor,
+    Speed,
+}
