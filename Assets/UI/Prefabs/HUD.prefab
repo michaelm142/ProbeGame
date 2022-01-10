@@ -1871,6 +1871,7 @@ GameObject:
   - component: {fileID: 7065187068115145776}
   - component: {fileID: 7065187068115145783}
   - component: {fileID: 7065187068115145782}
+  - component: {fileID: 2083394771192317725}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -1986,9 +1987,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6cd334161d9d83a4b89cd2f62cb70181, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.485
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2096,6 +2097,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a197bac6723901840b79d41efe040be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2083394771192317725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7065187068115145790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08a1a19fb3945948a3adace7d1c3b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7065187068116505165
@@ -7891,6 +7904,8 @@ MonoBehaviour:
   HackingOverlay: {fileID: 7065187067812761680}
   energyBar: {fileID: 6294769454833928225}
   MetalCount: {fileID: 8108674119797422888}
+  SwitchToDrone: {fileID: 0}
+  SwitchToCombatDrone: {fileID: 0}
 --- !u!82 &7065187068749732283
 AudioSource:
   m_ObjectHideFlags: 0

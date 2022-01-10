@@ -8,26 +8,37 @@ using UnityEngine.Events;
 // defines behavior for an interactable object
 public class Interactable : MonoBehaviour
 {
-    private GameObject interactableButtonPrefab;
-    private GameObject icon;
+    public GameObject interactableButtonPrefab;
+    public GameObject icon { get; private set; }
 
     public float radius = 10.0f;
 
     public Button.ButtonClickedEvent OnInteract;
 
-    private void Start()
+    private void Awake()
     {
-        interactableButtonPrefab = Resources.Load<GameObject>("UI/Interaction");
+        if (interactableButtonPrefab == null)
+        {
+            interactableButtonPrefab = Resources.Load<GameObject>("UI/Interaction");
 
-        icon = Instantiate(interactableButtonPrefab, GameObject.Find("HUD/InteractionSystem").transform);
-        if (OnInteract == null)
-            Destroy(icon.GetComponent<Button>());
+            icon = Instantiate(interactableButtonPrefab, GameObject.Find("HUD/InteractionSystem").transform);
+            icon.GetComponentInChildren<Text>().text = icon.name;
+            icon.name = name != null ? name : string.Format("Icon {0}", FindObjectsOfType<Interactable>().Length);
+        }
         else
-            icon.GetComponent<Button>().onClick = OnInteract;
-        icon.GetComponent<Button>().onClick.AddListener(OnUIInteractionClick);
+        {
+            icon = Instantiate(interactableButtonPrefab, GameObject.Find("HUD/InteractionSystem").transform);
+        }
 
-        icon.name = name != null ? name : string.Format("Icon {0}", FindObjectsOfType<Interactable>().Length);
-        icon.GetComponentInChildren<Text>().text = icon.name;
+        if (icon.GetComponent<Button>() != null)
+        {
+            if (OnInteract == null)
+                Destroy(icon.GetComponent<Button>());
+            else
+                icon.GetComponent<Button>().onClick = OnInteract;
+            icon.GetComponent<Button>().onClick.AddListener(OnUIInteractionClick);
+        }
+
     }
 
     void OnUIInteractionClick()

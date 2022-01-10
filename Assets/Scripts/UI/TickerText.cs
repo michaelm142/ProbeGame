@@ -25,7 +25,7 @@ public class TickerText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (animateAutomatically && time < duration)
+        if ((animateAutomatically && Application.isPlaying) && time < duration)
             time += Time.deltaTime;
         time = Mathf.Clamp(time, 0.0f, duration);
 

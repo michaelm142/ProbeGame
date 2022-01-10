@@ -61,6 +61,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e42eaa62e42896489a936497960b1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableButtonPrefab: {fileID: 5908310457454608674, guid: 12f5b8d770d8f6e43b4a34653690660d,
+    type: 3}
   radius: 10
   OnInteract:
     m_PersistentCalls:
@@ -79,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 25
   type: 0
+  pickupSound: {fileID: 8300000, guid: fc1c869d71951a64892165070414e13e, type: 3}
 --- !u!1001 &3103867215897783387
 PrefabInstance:
   m_ObjectHideFlags: 0

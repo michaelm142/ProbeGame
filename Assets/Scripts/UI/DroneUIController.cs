@@ -19,6 +19,9 @@ public class DroneUIController : MonoBehaviour
 
     private float damageIndicatorAlpha;
 
+    public AudioClip SwitchToDrone;
+    public AudioClip SwitchToCombatDrone;
+
     void Awake()
     {
         CameraController.instance.OnCameraChanged.AddListener(new UnityEngine.Events.UnityAction(OnCameraChanged));
@@ -43,6 +46,13 @@ public class DroneUIController : MonoBehaviour
         else
             healthBar.SetActive(true);
 
+        if (DroneController.Instance.ActiveDrone != null)
+        {
+            if (DroneController.Instance.ActiveDrone.GetComponentInChildren<DroneGunAim>() == null)
+                HUDAudioController.PlaySound(SwitchToDrone);
+            else
+                HUDAudioController.PlaySound(SwitchToCombatDrone);
+        }
     }
 
     // Update is called once per frame

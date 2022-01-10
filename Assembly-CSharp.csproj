@@ -110,6 +110,7 @@
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\[dlnk Script Library]\Basic Scripts\Misc\CameraOrbit.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Components\GrainComponent.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\[dlnk Script Library]\Tags\TagsMain.cs" />
+    <Compile Include="Assets\Scripts\UI\QualityOptions.cs" />
     <Compile Include="Assets\Scripts\AI\Attack.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\PostProcessingContext.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Components\MotionBlurComponent.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Assets\PostProcessing\Runtime\Models\ScreenSpaceReflectionModel.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\TDLevel.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Components\DepthOfFieldComponent.cs" />
+    <Compile Include="Assets\Scripts\UI\ProbeStoreUpgrade.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\[dlnk Script Library]\Tags\CompassCamera.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Components\ColorGradingComponent.cs" />
     <Compile Include="Assets\Scripts\Pathwalker.cs" />
@@ -196,7 +198,7 @@
     <Compile Include="Assets\Scripts\UI\TickerText.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\AntialiasingModel.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Models\DitheringModel.cs" />
-    <Compile Include="Assets\Scripts\UI\ProbeStoreUpgrade.cs" />
+    <Compile Include="Assets\Scripts\UI\HUDAudioController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />
