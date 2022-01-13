@@ -15,9 +15,12 @@ public class MainMenu : MonoBehaviour
     public SaveSlots SaveSlots;
     public GameObject NameEntryScreen;
 
+    public Text version;
+
     // Start is called before the first frame update
     void Start()
     {
+        version.text = Application.version;
     }
 
     // Update is called once per frame
@@ -37,8 +40,7 @@ public class MainMenu : MonoBehaviour
             return 0;
         });
 
-        var inventory = FindObjectOfType<LoadSave>().LoadProgress(saveFiles[0].FullName);
-        inventory.activeSaveFile = saveFiles[0];
+        FindObjectOfType<LoadSave>().LoadProgress(saveFiles[0].FullName);
     }
 
     public void BeginNewGame()
@@ -80,7 +82,7 @@ public class MainMenu : MonoBehaviour
             FindObjectOfType<LoadSave>().LoadProgress(index);
     }
 
-    public void SetUserName(UnityEngine.UI.InputField inputField)
+    public void SetUserName(InputField inputField)
     {
         userName = inputField.text;
         SaveSlots.state = state;

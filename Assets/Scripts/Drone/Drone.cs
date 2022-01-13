@@ -18,7 +18,6 @@ public class Drone : MonoBehaviour
     public float Health;
 
     public bool hacking { get { return connectedSubsystem != null; } }
-    bool ignoreDestroy;
 
     // Start is called before the first frame update
     void Awake()
@@ -28,15 +27,8 @@ public class Drone : MonoBehaviour
         var ring = Resources.Load<Texture2D>("SelectRing");
         Health = MaxHealth;
 
-        Application.quitting += Application_quitting;
-
         if (ExplosionPrefab == null)
             ExplosionPrefab = Resources.Load<GameObject>("Effects/DroneExplode");
-    }
-
-    private void Application_quitting()
-    {
-        ignoreDestroy = true;
     }
 
     private void Start()
@@ -46,8 +38,10 @@ public class Drone : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (ignoreDestroy)
+        if (Health > 0.0f)
             return;
+
+
         var di = GetComponent<DroneInventory>();
         var obj = new GameObject("Drone Inventory");
         DontDestroyOnLoad(obj);

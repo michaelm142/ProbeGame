@@ -18,6 +18,7 @@ public class PlayerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         DontDestroyOnLoad(this);
 
         buyProbesButtons = FindObjectsOfType<Button>().ToList().FindAll(b => b.name == "BuyProbeButton");
@@ -36,9 +37,9 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    public Drone BuyProbe()
+    public Drone BuyDrone(DroneType type)
     {
-        var p = new Drone();
+        var p = new Drone(type);
         probes.Add(p);
 
         return p;
@@ -48,11 +49,21 @@ public class PlayerInventory : MonoBehaviour
     {
         public List<DroneUpgrade> upgrades;
 
-        public Drone()
+        public DroneType type;
+
+        public Drone(DroneType type = DroneType.Hacker)
         {
             upgrades = new List<DroneUpgrade>();
+            this.type = type;
         }
     }
+}
+
+public enum DroneType
+{
+    Hacker,
+    Combat,
+    Scout,
 }
 
 public class DroneUpgrade
@@ -68,8 +79,8 @@ public class DroneUpgrade
 
     public static Dictionary<DroneUpgradeType, string[]> UpgradeDescriptions = new Dictionary<DroneUpgradeType, string[]>()
     {
-        { DroneUpgradeType.Hull,     new string[] 
-        { 
+        { DroneUpgradeType.Hull,     new string[]
+        {
             "Titanium alloy frame fortifies structural integrity.\n\nIncreaces max health to 16",
             "Increaced armor plating around the drone hull to protect it from hostile environments.\n\nIncreases max health to 32",
             "Anti-balistic foam insets absorb kenitc energy from incomming attacks.\n\nIncreases max health to 48",
@@ -80,13 +91,13 @@ public class DroneUpgrade
             "Advanced Opical sensors increase detection and scanning capabilities",
             "Advanced Opical sensors increase detection and scanning capabilities",
         } },
-        { DroneUpgradeType.Sensor,   new string[] 
-        { 
+        { DroneUpgradeType.Sensor,   new string[]
+        {
             "Augmented scanner array. Scans in both radar and infrared spectral bands for more accurate target detection.\n\nIncreases detection radius to 10 meters",
             "Advanced on-board tracking computer allows for faster target anylsys and aquisition.\n\nIncreases detection radius to 15 meters",
             "Additional capacitors to increase signal amplitude and range.\n\nIncreaces detection radius to 30 meters",
         } },
-        { DroneUpgradeType.Speed,    new string[] 
+        { DroneUpgradeType.Speed,    new string[]
         {
             "Advanced motors and wheel kit for increaced speed.\n\nIncreaces drone speed to 3.5 meters per second",
             "Augmented power system allows for higher output torque.\n\nIncreaces drone speed to 5 meters per second",

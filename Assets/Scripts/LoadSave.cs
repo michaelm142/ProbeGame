@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class LoadSave : MonoBehaviour
 {
-    public PlayerInventory LoadProgress(string filename)
+    public void LoadProgress(string filename)
     {
         FileInfo file = new FileInfo(filename);
         if (file == null || !file.Exists)
@@ -16,6 +16,7 @@ public class LoadSave : MonoBehaviour
 
         GameObject inventoryObj = new GameObject("Player Inventory", typeof(PlayerInventory));
         var playerInventory = inventoryObj.GetComponent<PlayerInventory>();
+        playerInventory.activeSaveFile = file;
 
 
         XmlDocument doc = new XmlDocument();
@@ -52,16 +53,14 @@ public class LoadSave : MonoBehaviour
             playerInventory.probes.Add(probe);
         }
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
-
-        return playerInventory;
     }
 
-    public PlayerInventory LoadProgress(int slotIndex)
+    public void LoadProgress(int slotIndex)
     {
         DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
         FileInfo file = dir.GetFiles().ToList().Find(f => f.Extension == string.Format(".slot{0}", slotIndex));
 
-        return LoadProgress(file.FullName);
+        LoadProgress(file.FullName);
     }
 
     public void SaveProgress()
@@ -84,7 +83,7 @@ public class LoadSave : MonoBehaviour
 
         foreach (var probe in inventory.probes)
         {
-            var probeNode = root.AppendChild(doc.CreateElement("Probe"));
+            var probeNode = doc.CreateElement("Probe");
             foreach (var upgrade in probe.upgrades)
             {
                 var upgradeElement = doc.CreateElement(upgrade.ToString());
@@ -94,9 +93,11 @@ public class LoadSave : MonoBehaviour
                 upgradeElement.Attributes.Append(levelAttr);
                 probeNode.AppendChild(upgradeElement);
             }
+            root.AppendChild(probeNode);
         }
-        
-        doc.Save(file.OpenWrite());
+
+        using (var filestream = file.Open(FileMode.Create))
+            doc.Save(filestream);
 
         MessageBox.Show(string.Format("Game {0} has been saved", Path.GetFileNameWithoutExtension(file.Name)));
     }

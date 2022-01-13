@@ -44,14 +44,15 @@ public class ProbeStoreUpgrade : MonoBehaviour, IPointerClickHandler, IPointerEn
     void Start()
     {
         purchaseing = transform.parent.GetComponent<DronePurchaseing>();
-        upgrade = purchaseing.probe.upgrades.Find(u => u.type == Type);
+        if (purchaseing.drone != null)
+            upgrade = purchaseing.drone.upgrades.Find(u => u.type == Type);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (purchaseing.probe != null && upgrade == null)
-            upgrade = purchaseing.probe.upgrades.Find(u => u.type == Type);
+        if (purchaseing.drone != null && upgrade == null)
+            upgrade = purchaseing.drone.upgrades.Find(u => u.type == Type);
         if (upgrade != null)
             LevelLabel.text = upgrade.Level.ToString();
     }

@@ -25,6 +25,7 @@ public class Rikayon : MonoBehaviour
     }
 
     public AudioClip[] attackAudio;
+    public AudioClip[] idleAudio;
     private AudioSource source;
 
     // Use this for initialization
@@ -72,8 +73,20 @@ public class Rikayon : MonoBehaviour
             triggerAnimation = true;
         }
 
-        if (currentAnimationState == "Attack" && animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Fight_Idle_1"))
-            currentAnimationState = "Fight_Idle_1";
+        if (currentAnimationState == "Attack")
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Fight_Idle_1"))
+                currentAnimationState = "Fight_Idle_1";
+        }   
+        else
+        {
+            if (!source.isPlaying)
+            {
+                int randomIndex = Random.Range(0, idleAudio.Length);
+                source.clip = idleAudio[randomIndex];
+                source.Play();
+            }
+        }
 
         if (triggerAnimation)
             animator.SetTrigger(currentAnimationState);

@@ -119,6 +119,8 @@ public class DroneController : MonoBehaviour
 
     public void DroneDestroyed(Drone drone)
     {
+        if (ActiveDrone == drone)
+            FindObjectOfType<DroneUIController>().SendMessage("DroneDestroyed");
         drones.Remove(drone);
         var destoryedIndicator = Instantiate(Resources.Load<GameObject>("UI/PlayerDestroyedIndicator"));
         destoryedIndicator.transform.position = drone.transform.position;

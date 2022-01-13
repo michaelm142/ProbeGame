@@ -9,7 +9,7 @@ public class DronePurchaseing : MonoBehaviour
 
     public Text UpgradeInformationLabel;
 
-    public PlayerInventory.Drone probe { get; private set; }
+    public PlayerInventory.Drone drone { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -24,18 +24,18 @@ public class DronePurchaseing : MonoBehaviour
 
     public void BuyProbe()
     {
-        if (probe != null)
+        if (drone != null)
             return;
 
-        probe = FindObjectOfType<PlayerInventory>().BuyProbe();
+        FindObjectOfType<StoreScreen>().BeginBuyDrone(this);
     }
 
     public void UpgradeProbe(int type)
     {
         DroneUpgradeType t = (DroneUpgradeType)type;
-        var upgrade = probe.upgrades.Find(u => u.type == t);
+        var upgrade = drone.upgrades.Find(u => u.type == t);
         if (upgrade == null)
-            probe.upgrades.Add(new DroneUpgrade(t));
+            drone.upgrades.Add(new DroneUpgrade(t));
         else if (upgrade.Level < MaxLevels)
             upgrade.Level++;
     }

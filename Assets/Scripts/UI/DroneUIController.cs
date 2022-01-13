@@ -21,6 +21,9 @@ public class DroneUIController : MonoBehaviour
 
     public AudioClip SwitchToDrone;
     public AudioClip SwitchToCombatDrone;
+    public AudioClip switchToCamera;
+
+    public GameObject connectionLostEffect;
 
     void Awake()
     {
@@ -34,8 +37,16 @@ public class DroneUIController : MonoBehaviour
         healthBarImage = healthBar.GetComponent<Image>();
     }
 
+    void DroneDestroyed()
+    {
+        connectionLostEffect.SetActive(true);
+    }
+
     void OnCameraChanged()
     {
+        if (connectionLostEffect.activeSelf)
+            connectionLostEffect.SetActive(false);
+
         var currentCamera = CameraController.instance.ActiveCamera;
         HackingOverlay.SetActive(false);
         if (currentCamera == null)
@@ -46,7 +57,9 @@ public class DroneUIController : MonoBehaviour
         else
             healthBar.SetActive(true);
 
-        if (DroneController.Instance.ActiveDrone != null)
+        if (currentCamera.transform.parent.tag == "SecurityCamera")
+            HUDAudioController.PlaySound(switchToCamera);
+        else if (DroneController.Instance.ActiveDrone != null)
         {
             if (DroneController.Instance.ActiveDrone.GetComponentInChildren<DroneGunAim>() == null)
                 HUDAudioController.PlaySound(SwitchToDrone);
