@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndOfLevelScreen.unity
     guid: 0436751a9cd0f6c48b5048dbaa7750d8
+  - enabled: 1
+    path: Assets/Scenes/VonBron.unity
+    guid: fd3ff7027e166fb4a9907c8e7679240a
   m_configObjects: {}

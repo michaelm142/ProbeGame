@@ -21,6 +21,6 @@ public class MenuControls : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadSceneAsync(4);
     }
 }

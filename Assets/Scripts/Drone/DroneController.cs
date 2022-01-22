@@ -28,7 +28,7 @@ public class DroneController : MonoBehaviour
         }
     }
 
-    public static DroneController Instance;
+    public static DroneController Instance { get; private set; }
 
     private List<Drone> drones = new List<Drone>();
     public IEnumerable<Drone> Drones
@@ -40,10 +40,10 @@ public class DroneController : MonoBehaviour
         }
     }
 
-    private float moveAxisPrev;
-
-    public string MoveInputAxis = "Fire1";
-
+    public int DroneCount
+    {
+        get { return drones.Count; }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -55,16 +55,6 @@ public class DroneController : MonoBehaviour
             d.Camera.enabled = false;
             drones.Add(d);
         }
-
-        CameraController.instance.OnCameraChanged.AddListener(OnCameraChanged);
-    }
-
-    private void OnCameraChanged()
-    {
-        if (CameraController.instance.ActiveCamera == null)
-            return;
-        if (CameraController.instance.ActiveCamera.transform.parent != null && CameraController.instance.ActiveCamera.transform.parent.tag == "Player")
-            transform.Find("ProbeStatus/HackingOverlay").gameObject.SetActive(activeDrone.hacking);
     }
 
     private bool first = true;
@@ -89,6 +79,27 @@ public class DroneController : MonoBehaviour
             first = false;
         }
 
+        if (activeDrone == null)
+            return;
+
+        if (Pause.Paused)
+            activeDrone.GetComponent<Rigidbody>().isKinematic = true;
+        else
+        { 
+            activeDrone.GetComponent<Rigidbody>().isKinematic = false;
+            float vertical = Input.GetAxis("Vertical");
+            float horizontal = Input.GetAxis("Horizontal");
+
+            int droneIndex = drones.IndexOf(activeDrone);
+
+            var body = activeDrone.GetComponent<Rigidbody>();
+            body.velocity = vertical * activeDrone.transform.forward * activeDrone.MoveSpeed * Time.deltaTime;
+            body.AddTorque(Vector3.up * horizontal);
+
+            // activeDrone.transform.position += vertical * activeDrone.transform.forward * activeDrone.MoveSpeed * Time.deltaTime;
+            activeDrone.transform.rotation *= Quaternion.AngleAxis(horizontal, Vector3.up);
+        }
+#if FALSE
         float moveAxis = Input.GetAxis(MoveInputAxis);
         if (ActiveDrone != null && moveAxis > 0.1f && moveAxisPrev < 0.1f)
         {
@@ -115,15 +126,13 @@ public class DroneController : MonoBehaviour
             }
         }
         moveAxisPrev = moveAxis;
+#endif
     }
 
     public void DroneDestroyed(Drone drone)
     {
-        if (ActiveDrone == drone)
-            FindObjectOfType<DroneUIController>().SendMessage("DroneDestroyed");
+        FindObjectOfType<DroneUIController>().SendMessage("DroneDestroyed", drone);
         drones.Remove(drone);
-        var destoryedIndicator = Instantiate(Resources.Load<GameObject>("UI/PlayerDestroyedIndicator"));
-        destoryedIndicator.transform.position = drone.transform.position;
     }
 
     public void DroneDamaged(Drone drone, Vector3 position)
@@ -137,7 +146,7 @@ public class DroneController : MonoBehaviour
         {
             Vector3 direction = position - drone.transform.position;
 
-            GetComponentInChildren<DroneUIController>().SendMessage("OnDroneDamaged", Vector3.Angle(direction, drone.transform.forward) * (Vector3.Dot(drone.transform.right, direction) < 0 ? 1.0f : -1.0f)) ;
+            GetComponentInChildren<DroneUIController>().SendMessage("OnDroneDamaged", Vector3.Angle(direction, drone.transform.forward) * (Vector3.Dot(drone.transform.right, direction) < 0 ? 1.0f : -1.0f));
         }
     }
 

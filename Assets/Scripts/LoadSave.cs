@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class LoadSave : MonoBehaviour
 {
-    public void LoadProgress(string filename)
+    public static void LoadProgress(string filename)
     {
         FileInfo file = new FileInfo(filename);
         if (file == null || !file.Exists)
@@ -55,7 +55,7 @@ public class LoadSave : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
-    public void LoadProgress(int slotIndex)
+    public static void LoadProgress(int slotIndex)
     {
         DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
         FileInfo file = dir.GetFiles().ToList().Find(f => f.Extension == string.Format(".slot{0}", slotIndex));
@@ -63,7 +63,7 @@ public class LoadSave : MonoBehaviour
         LoadProgress(file.FullName);
     }
 
-    public void SaveProgress()
+    public static void SaveProgress()
     {
         var inventory = FindObjectOfType<PlayerInventory>();
 

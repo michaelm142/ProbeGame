@@ -19,10 +19,7 @@ public class MinimapIconManager : MonoBehaviour
         }
     }
 
-    private Camera minimapCamera
-    {
-        get { return GetComponent<MiniMapClickNavigation>().minimapCamera; }
-    }
+    public Camera minimapCamera;
 
     public GameObject IconPrefab;
 

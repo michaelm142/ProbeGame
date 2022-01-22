@@ -3,7 +3,12 @@ guid: 1eb3637030a694f4e96060e8c10edddf
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tankTread
+    second: {fileID: 2100000, guid: d675f1d797af20d42b658d02d08bc2b3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

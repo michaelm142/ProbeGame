@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class Door : MonoBehaviour
 {
-    public DoorState State;
+    public DoorState State = DoorState.Closed;
     DoorState statePrev;
 
     public bool Locked
@@ -17,12 +16,13 @@ public class Door : MonoBehaviour
 
     MiniMapIcon mapIcon;
 
-    Animator anim;
+    public Animator anim;
 
     // Start is called before the first frame update
     void Awake()
     {
-        anim = GetComponent<Animator>();
+        if (anim == null)
+            anim = GetComponent<Animator>();
         mapIcon = GetComponent<MiniMapIcon>();
         mapIcon.OnClicked.AddListener(delegate { FindObjectOfType<DoorControler>().ToggleDoorLocked(this); });
     }
@@ -30,7 +30,7 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (State != statePrev)
+        if (statePrev != State)
         {
             if (State == DoorState.Open)
             {
@@ -49,7 +49,10 @@ public class Door : MonoBehaviour
                 mapIcon.Color = Color.red;
             }
             else if (State == DoorState.Disabled)
+            {
+                anim.SetBool("Open", false);
                 mapIcon.Color = Color.gray;
+            }
         }
 
         statePrev = State;

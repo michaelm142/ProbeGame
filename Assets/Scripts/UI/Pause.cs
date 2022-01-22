@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
+    public static bool Paused { get; private set; }
+
     private void OnEnable()
     {
-        //Time.timeScale = 0.0f;
+        Paused = true;
     }
 
     private void OnDisable()
     {
-        Time.timeScale = 1.0f;
+        Paused = false;
     }
 }

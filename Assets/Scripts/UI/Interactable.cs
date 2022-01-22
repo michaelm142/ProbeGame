@@ -22,7 +22,7 @@ public class Interactable : MonoBehaviour
             interactableButtonPrefab = Resources.Load<GameObject>("UI/Interaction");
 
             icon = Instantiate(interactableButtonPrefab, GameObject.Find("HUD/InteractionSystem").transform);
-            icon.GetComponentInChildren<Text>().text = icon.name;
+            icon.GetComponentInChildren<Text>().text = name;
             icon.name = name != null ? name : string.Format("Icon {0}", FindObjectsOfType<Interactable>().Length);
         }
         else

@@ -16,6 +16,7 @@ public class Drone : MonoBehaviour
 
     public float MaxHealth = 30.0f;
     public float Health;
+    public float MoveSpeed = 1.5f;
 
     public bool hacking { get { return connectedSubsystem != null; } }
 

@@ -6,6 +6,8 @@ public class DroneSensors : MonoBehaviour
 {
     public float Radius = 10.0f;
 
+    private List<GameObject> localEnemies = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,15 +17,28 @@ public class DroneSensors : MonoBehaviour
         collider.isTrigger = true;
     }
 
+    private void OnDestroy()
+    {
+        localEnemies.ForEach(e => e.GetComponent<MiniMapIcon>().enabled = false);
+    }
+
+    private void Update()
+    {
+        localEnemies.ForEach(e => e.GetComponent<MiniMapIcon>().enabled = true);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
-            other.GetComponent<MiniMapIcon>().enabled = true;
+            localEnemies.Add(other.gameObject);
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Enemy")
+        {
+            localEnemies.Remove(other.gameObject);
             other.GetComponent<MiniMapIcon>().enabled = false;
+        }
     }
 }

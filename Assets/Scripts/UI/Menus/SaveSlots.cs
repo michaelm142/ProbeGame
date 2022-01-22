@@ -10,6 +10,8 @@ public class SaveSlots : MonoBehaviour
 {
     public MainMenuState state;
 
+    public bool DeletingSaveSlot { get; set; }
+
     private void OnEnable()
     {
         var slot1 = transform.Find("slot1");
@@ -67,5 +69,21 @@ public class SaveSlots : MonoBehaviour
             else
                 slot3.GetComponent<Button>().interactable = true;
         }
+    }
+
+    public void UpdateDeleteSaveSlot(int index)
+    {
+        if (!DeletingSaveSlot)
+            return;
+        DeletingSaveSlot = false;
+
+        var dir = new DirectoryInfo(Environment.CurrentDirectory);
+        var fileToDelete = dir.GetFiles().ToList().Find(f => f.Extension == string.Format(".slot{0}", index));
+        fileToDelete.Delete();
+
+        var slot = transform.Find("slot" + index.ToString());
+        slot.Find("Name").GetComponent<Text>().text = "Username";
+        slot.Find("DateCreated").GetComponent<Text>().text = "Date Created: 00/00/0000";
+        slot.GetComponent<Button>().interactable = false;
     }
 }

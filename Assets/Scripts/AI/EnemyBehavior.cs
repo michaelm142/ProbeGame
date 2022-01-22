@@ -42,8 +42,18 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentState.Update();
-        Debug.Log(currentState);
+        if (Pause.Paused)
+        {
+            if (!agent.isStopped)
+                agent.isStopped = true;
+        }
+        else
+        {
+            if (agent.isStopped)
+                agent.isStopped = false;
+            currentState.Update();
+        }
+        //Debug.Log(string.Format("Agent {0} current state: {1}", gameObject.name, currentState));
         if (currentTarget != null && Vector3.Distance(currentTarget.transform.position, transform.position) < AttackRadius)
             gameObject.BroadcastMessage("Attack", SendMessageOptions.DontRequireReceiver);
     }

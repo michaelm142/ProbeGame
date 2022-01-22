@@ -51,7 +51,6 @@ public class MiniMapClickNavigation : MonoBehaviour, IPointerDownHandler
         if (eventData.button != InputButton)
             return;
         RectTransform r = GetComponent<RectTransform>();
-        // Debug.Log(r.worldToLocalMatrix.MultiplyPoint(eventData.position) / r.rect.max);
         Vector3 mapPos = r.worldToLocalMatrix.MultiplyPoint(eventData.position) / r.rect.max;
         Vector3 vertical = minimapCamera.transform.up * (mapPos.y * minimapCamera.orthographicSize);
         Vector3 horizontal = minimapCamera.transform.right * (mapPos.x * minimapCamera.orthographicSize);

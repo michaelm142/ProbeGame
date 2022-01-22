@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class HackingMinigame : MonoBehaviour
     public int Difficulty = 1;
 
     private List<HackingTile> tiles = new List<HackingTile>();
+    public HackingTile previouslyPressed { get; set; }
 
     public Sprite Pipe;
     public Sprite Node;
@@ -18,9 +20,12 @@ public class HackingMinigame : MonoBehaviour
 
     public Dictionary<Color, List<HackingTile>> ColorLines = new Dictionary<Color, List<HackingTile>>();
 
-    public HackingTile previouslyPressed;
+    public List<List<HackingTile>> DebugColorLines => ColorLines.Values.ToList();
+
+    public UnityEngine.Events.UnityEvent Win;
 
     public Color CurrentColor;// { get; set; } = Color.white;
+    public List<Color> CompletedColors = new List<Color>();
 
     private Color[] ColorPalette = new Color[]
     {
@@ -42,8 +47,15 @@ public class HackingMinigame : MonoBehaviour
         GenerateTiles(Difficulty);
     }
 
+    private void Update()
+    {
+        if (CompletedColors.Count == Difficulty)
+            Win.Invoke();
+    }
+
     public void UpdateTiles()
     {
+        // Clear board
         foreach (var tile in tiles)
         {
             if (tile.IsNode)
@@ -51,6 +63,8 @@ public class HackingMinigame : MonoBehaviour
             tile.sprite = null;
             tile.Color = Color.white;
         }
+
+        // Update each color line on the board
         foreach (var kvp in ColorLines)
         {
             var color = kvp.Key;
@@ -63,19 +77,192 @@ public class HackingMinigame : MonoBehaviour
                 var tile = line[i];
                 var tileNext = line[i + 1];
                 var tilePrev = line[i - 1];
-                if (tileNext == tile.tile_left && tilePrev == tile.tile_right || (tileNext == tile.tile_right && tilePrev == tile.tile_right))
-                    tile.sprite = PipeTurnRight;
-                if (tile.IsNode)
-                    continue;
 
-                tile.sprite = Pipe;
-                tile.Color = color;
+                UpdateTileInSequence(color, tilePrev, tile, tileNext);
+            }
+
+            if (line.Count < 2)
+                continue;
+            // update last tile in sequence
+            var lastTile = line[line.Count - 1];
+            var secondToLast = line[line.Count - 2];
+            if (!lastTile.IsNode)
+            {
+                if (secondToLast == lastTile.tile_left || secondToLast == lastTile.tile_right)
+                {
+                    lastTile.Color = color;
+                    lastTile.transform.rotation = Quaternion.AngleAxis(90.0f, Vector3.forward);
+                    lastTile.sprite = Pipe;
+                }
+                else if (secondToLast == lastTile.tile_up || secondToLast == lastTile.tile_down)
+                {
+                    lastTile.Color = color;
+                    lastTile.transform.rotation = Quaternion.AngleAxis(0.0f, Vector3.forward);
+                    lastTile.sprite = Pipe;
+                }
+            }
+            else
+            {
+                // O O O
+                // O X >
+                // O O O
+                if (lastTile == secondToLast.tile_left)
+                {
+                    lastTile.sprite = ConnectedNode;
+                    lastTile.transform.rotation = Quaternion.AngleAxis(-90.0f, Vector3.forward);
+                }
+                // O ^ O
+                // O X O
+                // O O O
+                if (lastTile == secondToLast.tile_down)
+                {
+                    lastTile.sprite = ConnectedNode;
+                    lastTile.transform.rotation = Quaternion.AngleAxis(0.0f, Vector3.forward);
+                }
+                // O O O
+                // < X O
+                // O O O
+                if (lastTile == secondToLast.tile_right)
+                {
+                    lastTile.sprite = ConnectedNode;
+                    lastTile.transform.rotation = Quaternion.AngleAxis(90.0f, Vector3.forward);
+                }
+                // O O O
+                // O X O
+                // O v O
+                if (lastTile == secondToLast.tile_up)
+                {
+                    lastTile.sprite = ConnectedNode;
+                    lastTile.transform.rotation = Quaternion.AngleAxis(180.0f, Vector3.forward);
+                }
             }
         }
     }
 
+    private void UpdateTileInSequence(Color sequenceColor, HackingTile tilePrev, HackingTile tile, HackingTile tileNext)
+    {
+        if (tilePrev.IsNode)
+        {
+            // O O O
+            // O X >
+            // O O O
+            if (tilePrev == tile.tile_left)
+            {
+                tilePrev.sprite = ConnectedNode;
+                tilePrev.transform.rotation = Quaternion.AngleAxis(-90.0f, Vector3.forward);
+            }
+            // O ^ O
+            // O X O
+            // O O O
+            if (tilePrev == tile.tile_down)
+            {
+                tilePrev.sprite = ConnectedNode;
+                tilePrev.transform.rotation = Quaternion.AngleAxis(0.0f, Vector3.forward);
+            }
+            // O O O
+            // < X O
+            // O O O
+            if (tilePrev == tile.tile_right)
+            {
+                tilePrev.sprite = ConnectedNode;
+                tilePrev.transform.rotation = Quaternion.AngleAxis(90.0f, Vector3.forward);
+            }
+            // O O O
+            // O X O
+            // O v O
+            if (tilePrev == tile.tile_up)
+            {
+                tilePrev.sprite = ConnectedNode;
+                tilePrev.transform.rotation = Quaternion.AngleAxis(180.0f, Vector3.forward);
+            }
+        }
+        // O v O
+        // O X >
+        // O O O
+        if (tilePrev == tile.tile_up && tileNext == tile.tile_right)
+        {
+            tile.sprite = PipeTurnRight;
+            tile.transform.rotation = Quaternion.identity;
+        }
+        // O v O
+        // < X o
+        // O O O
+        else if (tilePrev == tile.tile_up && tileNext == tile.tile_left)
+        {
+            tile.sprite = PipeTurnLeft;
+            tile.transform.rotation = Quaternion.identity;
+        }
+        // O O O
+        // > X O
+        // O V O
+        else if (tilePrev == tile.tile_left && tileNext == tile.tile_down)
+        {
+            tile.sprite = PipeTurnRight;
+            tile.transform.rotation = Quaternion.AngleAxis(180.0f, Vector3.forward);
+        }
+        // O ^ O
+        // > X O
+        // O O O
+        else if (tilePrev == tile.tile_left && tileNext == tile.tile_up)
+        {
+            tile.sprite = PipeTurnLeft;
+            tile.transform.rotation = Quaternion.identity;
+        }
+        // O ^ O
+        // 0 X <
+        // O O O
+        else if (tilePrev == tile.tile_right && tileNext == tile.tile_up)
+        {
+            tile.sprite = PipeTurnRight;
+            tile.transform.rotation = Quaternion.identity;
+        }
+        // O O O
+        // O X <
+        // O v O
+        else if (tilePrev == tile.tile_right && tileNext == tile.tile_down)
+        {
+            tile.sprite = PipeTurnLeft;
+            tile.transform.rotation = Quaternion.AngleAxis(180.0f, Vector3.forward);
+        }
+        // O O O
+        // O X >
+        // O ^ O
+        else if (tilePrev == tile.tile_down && tileNext == tile.tile_right)
+        {
+            tile.sprite = PipeTurnRight;
+            tile.transform.rotation = Quaternion.AngleAxis(-90.0f, Vector3.forward);
+        }
+        // O O O
+        // < X O
+        // O ^ O
+        else if (tilePrev == tile.tile_down && tileNext == tile.tile_left)
+        {
+            tile.sprite = PipeTurnLeft;
+            tile.transform.rotation = Quaternion.AngleAxis(90, Vector3.forward);
+        }
+        // O O O
+        // X X X
+        // O O O
+        else if ((tilePrev == tile.tile_left && tileNext == tile.tile_right || (tilePrev == tile.tile_right && tileNext == tile.tile_left)))
+        {
+            tile.sprite = Pipe;
+            tile.transform.rotation = Quaternion.AngleAxis(90.0f, Vector3.forward);
+        }
+        // O X O
+        // 0 X O
+        // O X O
+        else
+        {
+            tile.transform.rotation = Quaternion.identity;
+            tile.sprite = Pipe;
+        }
+
+        tile.Color = sequenceColor;
+    }
+
     public void RestartGame()
     {
+        CompletedColors.Clear();
         foreach (var line in ColorLines)
         {
             line.Value.Clear();
@@ -143,10 +330,14 @@ public class HackingMinigame : MonoBehaviour
             tiles[rand_x + rand_y * difficulty].GetComponent<HackingTile>().sprite = Node;
             tiles[rand_x + rand_y * difficulty].GetComponent<Image>().color = ColorPalette[i];
 
-            rand_x = Random.Range(0, difficulty);
-            rand_y = Random.Range(0, difficulty);
+            while (tiles[rand_x + rand_y * difficulty].sprite == Node)
+            {
+                rand_x = Random.Range(0, difficulty);
+                rand_y = Random.Range(0, difficulty);
+            }
             tiles[rand_x + rand_y * difficulty].GetComponent<HackingTile>().sprite = Node;
             tiles[rand_x + rand_y * difficulty].GetComponent<Image>().color = ColorPalette[i];
         }
     }
 }
+

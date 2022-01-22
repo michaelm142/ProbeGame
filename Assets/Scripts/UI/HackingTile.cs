@@ -19,7 +19,7 @@ public class HackingTile : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     public HackingTile tile_right;
     public HackingTile tile_down;
 
-    private List<HackingTile> neighboorzs;
+    public List<HackingTile> neighbours { get; private set; }
 
     public Color Color
     {
@@ -42,18 +42,19 @@ public class HackingTile : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         {
             if (game.CurrentColor == Color.white)
                 game.CurrentColor = Color;
+            game.CompletedColors.Remove(Color);
+            game.ColorLines[Color].Clear();
+            Debug.Log("Line Started");
+            game.ColorLines[Color].Add(this);
             return;
         }
-
-        if (game.previouslyPressed == null && sprite == null)
-            return;
 
         Color = game.CurrentColor;
         if (!game.ColorLines.ContainsKey(Color))
             return;
 
         sprite = Pipe;
-        Debug.Log(game.previouslyPressed.sprite.name);
+        //Debug.Log(game.previouslyPressed.sprite.name);
 
         if (game.ColorLines.Values.ToList().Find(l => l.Contains(this)) == null)
             game.ColorLines[Color].Add(this);
@@ -68,15 +69,30 @@ public class HackingTile : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (IsNode && game.CurrentColor == Color && !game.ColorLines[Color].Contains(this))
+        {
+            if (game.CurrentColor == Color)
+            {
+                game.CompletedColors.Add(Color);
+                game.ColorLines[Color].Add(this);
+                return;
+            }
+            else if (eventData.pointerPress != null && game.CurrentColor != Color.white)
+            {
+                game.ColorLines[game.CurrentColor].Clear();
+                game.CurrentColor = Color.white;
+            }
 
-        if (eventData.pointerPress != null && neighboorzs.Contains(game.previouslyPressed))
+        }
+        else if (eventData.pointerPress != null && neighbours.Contains(game.previouslyPressed))
             OnPointerDown(eventData);
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        neighboorzs = new List<HackingTile>()
+        neighbours = new List<HackingTile>()
         {
             tile_up,
             tile_down,
@@ -131,7 +147,7 @@ public class HackingTile : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     public void OnPointerUp(PointerEventData eventData)
     {
         game.previouslyPressed = null;
-        if (!IsNode)
+        if (!IsNode || !game.CompletedColors.Contains(Color))
             game.ColorLines[Color].Clear();
         game.CurrentColor = Color.white;
         game.UpdateTiles();

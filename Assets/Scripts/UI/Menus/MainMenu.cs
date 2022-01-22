@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
             return 0;
         });
 
-        FindObjectOfType<LoadSave>().LoadProgress(saveFiles[0].FullName);
+        LoadSave.LoadProgress(saveFiles[0].FullName);
     }
 
     public void BeginNewGame()
@@ -79,7 +79,7 @@ public class MainMenu : MonoBehaviour
             SceneManager.LoadScene("StoreScreen");
         }
         else
-            FindObjectOfType<LoadSave>().LoadProgress(index);
+            LoadSave.LoadProgress(index);
     }
 
     public void SetUserName(InputField inputField)

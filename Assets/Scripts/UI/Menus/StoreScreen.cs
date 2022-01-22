@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class StoreScreen : MonoBehaviour
 {
-    public GameObject MainPage;
-    public GameObject BuyProbeScreen;
+    public Animator MainPage;
 
     private DronePurchaseing activeSlot;
 
     // Start is called before the first frame update
     void Start()
     {
-        BuyProbeScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -24,8 +22,7 @@ public class StoreScreen : MonoBehaviour
     public void BeginBuyDrone(DronePurchaseing slot)
     {
         activeSlot = slot;
-        MainPage.SetActive(false);
-        BuyProbeScreen.SetActive(true);
+        MainPage.SetTrigger("BuyProbe");
     }
 
     public void BuyDrone(int type)
@@ -36,14 +33,12 @@ public class StoreScreen : MonoBehaviour
     public void BuyDrone(DroneType type)
     {
         activeSlot.drone = FindObjectOfType<PlayerInventory>().BuyDrone(type);
-        BuyProbeScreen.SetActive(false);
-        MainPage.SetActive(true);
+        MainPage.SetTrigger("MainPage");
     }
 
     public void CancelBuyDrone()
     {
         activeSlot = null;
-        BuyProbeScreen.SetActive(false);
-        MainPage.SetActive(true);
+        MainPage.SetTrigger("MainPage");
     }
 }

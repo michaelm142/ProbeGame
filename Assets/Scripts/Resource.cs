@@ -24,14 +24,13 @@ public class Resource : MonoBehaviour
 
     public void Interact()
     {
-        var inventory = DroneController.Instance.ActiveDrone.GetComponent<DroneInventory>();
         switch (type)
         {
             case ResourceType.Energy:
-                inventory.Energy += value;
+                FindObjectOfType<DroneUIController>().ChangeMetal(value);
                 break;
             case ResourceType.Metal:
-                inventory.Metal += value;
+                FindObjectOfType<DroneUIController>().ChangeEnergy(value);
                 break;
         }
 

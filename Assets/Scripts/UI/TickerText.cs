@@ -7,7 +7,7 @@ public class TickerText : MonoBehaviour
 {
     private Text text;
 
-    private string startText;
+    public string textBuffer { get; set; }
 
     public float time;
     public float duration = 1.0f;
@@ -18,7 +18,8 @@ public class TickerText : MonoBehaviour
     void Start()
     {
         text = GetComponent<Text>();
-        startText = text.text;
+        if (textBuffer == null)
+            textBuffer = text.text;
         text.text = string.Empty;
     }
 
@@ -30,7 +31,7 @@ public class TickerText : MonoBehaviour
         time = Mathf.Clamp(time, 0.0f, duration);
 
 
-        float targetLength = startText.Length * (time / duration);
-        text.text = startText.Substring(0, (int)targetLength);
+        float targetLength = textBuffer.Length * (time / duration);
+        text.text = textBuffer.Substring(0, (int)targetLength);
     }
 }

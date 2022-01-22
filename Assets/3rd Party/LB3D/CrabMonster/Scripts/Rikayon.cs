@@ -49,8 +49,13 @@ public class Rikayon : MonoBehaviour
             int roll = Random.Range(1, 6);
             animator.SetTrigger(string.Format("Attack_{0}", roll));
         }
-
-        UpdateAnimations();
+        if (!Pause.Paused)
+        {
+            animator.speed = 1.0f;
+            UpdateAnimations();
+        }
+        else
+            animator.speed = 0.0f;
     }
 
     #region AI
@@ -77,7 +82,7 @@ public class Rikayon : MonoBehaviour
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Fight_Idle_1"))
                 currentAnimationState = "Fight_Idle_1";
-        }   
+        }
         else
         {
             if (!source.isPlaying)

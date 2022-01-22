@@ -2,27 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class SonarPingControl : MonoBehaviour
+public class SonarPingControl : MonoBehaviour, IPointerClickHandler
 {
     public float CoolDownLength = 30.0f;
     private float coolDownTimer;
 
     public bool useSonarPing;
 
-    MiniMapClickNavigation mmcn;
-
     public Image Image;
-    private Button button;
+    public Button button;
 
     // Start is called before the first frame update
     void Start()
     {
-        mmcn = FindObjectOfType<MiniMapClickNavigation>();
-        mmcn.OnClick += MinimapClick;
-
-        button = GetComponent<Button>();
-
         coolDownTimer = CoolDownLength;
     }
 
@@ -43,16 +37,16 @@ public class SonarPingControl : MonoBehaviour
 
     public void ButtonClick()
     {
-        useSonarPing = mmcn.IgnoreNextClick = true;
+        useSonarPing = true;
     }
 
-    void MinimapClick(object sender, System.EventArgs e)
+    public void OnPointerClick(PointerEventData eventData)
     {
         if (!useSonarPing || coolDownTimer < CoolDownLength) return;
 
         GameObject prefab = Resources.Load<GameObject>("UI/SonarPing");
         var ping = Instantiate(prefab);
-        ping.transform.position = (Vector3)sender;
+        ping.transform.position = eventData.position;
         coolDownTimer = 0.0f;
         useSonarPing = false;
     }

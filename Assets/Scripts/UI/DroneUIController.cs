@@ -16,6 +16,8 @@ public class DroneUIController : MonoBehaviour
     public Image energyBar;
 
     public Text MetalCount;
+    public Text MetalCountChanged;
+    public Text EnergyCountChanged;
 
     private float damageIndicatorAlpha;
 
@@ -24,6 +26,9 @@ public class DroneUIController : MonoBehaviour
     public AudioClip switchToCamera;
 
     public GameObject connectionLostEffect;
+    public GameObject GameOverScreen;
+
+    public Animator InventoryChangedAnimator;
 
     void Awake()
     {
@@ -37,9 +42,39 @@ public class DroneUIController : MonoBehaviour
         healthBarImage = healthBar.GetComponent<Image>();
     }
 
-    void DroneDestroyed()
+    public void ChangeMetal(float ammount)
     {
-        connectionLostEffect.SetActive(true);
+        DroneController.Instance.ActiveDrone.GetComponent<DroneInventory>().Metal += ammount;
+        InventoryChangedAnimator.SetTrigger("MetalChanged");
+        MetalCountChanged.text = "+" + ammount.ToString();
+    }
+
+    public void ChangeEnergy(float ammount)
+    {
+        DroneController.Instance.ActiveDrone.GetComponent<DroneInventory>().Energy += ammount;
+        InventoryChangedAnimator.SetTrigger("EnergyChanged");
+        EnergyCountChanged.text = "+" + ammount.ToString() + "%";
+    }
+
+    void DroneDestroyed(Drone drone)
+    {
+        if (drone == DroneController.Instance.ActiveDrone)
+            connectionLostEffect.SetActive(true);
+
+        int dronesAlive = DroneController.Instance.DroneCount;
+        foreach (var d in DroneController.Instance.Drones)
+        {
+            if (d == null)
+                dronesAlive--;
+        }
+
+        if (dronesAlive == 1)
+            GameOverScreen.SetActive(true);
+        else
+        {
+            var destoryedIndicator = Instantiate(Resources.Load<GameObject>("UI/PlayerDestroyedIndicator"));
+            destoryedIndicator.transform.position = drone.transform.position;
+        }
     }
 
     void OnCameraChanged()
@@ -66,6 +101,15 @@ public class DroneUIController : MonoBehaviour
             else
                 HUDAudioController.PlaySound(SwitchToCombatDrone);
         }
+
+        if (CameraController.instance.ActiveCamera.transform.parent != null && CameraController.instance.ActiveCamera.transform.parent.tag == "Player")
+            transform.Find("HackingOverlay").gameObject.SetActive(DroneController.Instance.ActiveDrone.hacking);
+    }
+
+    public void LoadLatestSave()
+    {
+        var playerInventory = FindObjectOfType<PlayerInventory>();
+        LoadSave.LoadProgress(playerInventory.activeSaveFile.FullName);
     }
 
     // Update is called once per frame
@@ -92,6 +136,7 @@ public class DroneUIController : MonoBehaviour
         Color c = healthBarImage.color;
         c.a = damageIndicatorAlpha;
         damageDirectionIndicatorImage.color = c;
+
     }
 
     void OnDroneDamaged(float angle)
