@@ -30,13 +30,20 @@ public class DronePurchaseing : MonoBehaviour
         FindObjectOfType<StoreScreen>().BeginBuyDrone(this);
     }
 
-    public void UpgradeProbe(int type)
+    public bool UpgradeProbe(int type)
     {
+        if (FindObjectOfType<PlayerInventory>().Metal < 250.0f)
+        {
+            MessageBox.Show("Not enough metal");
+            return false;
+        }
         DroneUpgradeType t = (DroneUpgradeType)type;
         var upgrade = drone.upgrades.Find(u => u.type == t);
         if (upgrade == null)
             drone.upgrades.Add(new DroneUpgrade(t));
         else if (upgrade.Level < MaxLevels)
             upgrade.Level++;
+        FindObjectOfType<PlayerInventory>().Metal -= 250.0f;
+        return true;
     }
 }

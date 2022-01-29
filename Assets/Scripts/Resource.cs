@@ -27,10 +27,10 @@ public class Resource : MonoBehaviour
         switch (type)
         {
             case ResourceType.Energy:
-                FindObjectOfType<DroneUIController>().ChangeMetal(value);
+                FindObjectOfType<DroneUIController>().ChangeEnergy(value);
                 break;
             case ResourceType.Metal:
-                FindObjectOfType<DroneUIController>().ChangeEnergy(value);
+                FindObjectOfType<DroneUIController>().ChangeMetal(value);
                 break;
         }
 

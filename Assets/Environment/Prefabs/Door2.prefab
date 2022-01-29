@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 1
+  anim: {fileID: 0}
 --- !u!208 &1377483412692751259
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -210,6 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabOverride: {fileID: 4157505312945494873, guid: dbc7109c18ce46147b67eea27aa5481c,
     type: 3}
+  rotationOffset: 90
   Icon: {fileID: 0}
   Color: {r: 1, g: 1, b: 1, a: 1}
   RotateWithObject: 1

@@ -18,6 +18,8 @@ public class Drone : MonoBehaviour
     public float Health;
     public float MoveSpeed = 1.5f;
 
+    public DroneType type;
+
     public bool hacking { get { return connectedSubsystem != null; } }
 
     // Start is called before the first frame update

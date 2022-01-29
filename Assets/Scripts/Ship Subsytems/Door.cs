@@ -32,27 +32,17 @@ public class Door : MonoBehaviour
     {
         if (statePrev != State)
         {
-            if (State == DoorState.Open)
-            {
-                mapIcon.Color = Color.white;
-                anim.SetBool("Open", true);
-            }
-            else
-            {
-                mapIcon.Color = Color.white;
-                anim.SetBool("Open", false);
-            }
+            if (FindObjectOfType<DoorControler>().enabled)
+                mapIcon.MapIcon.GetComponent<Animator>().SetBool("Open", State == DoorState.Open);
+            
+            anim.SetBool("Open", State == DoorState.Open);
 
+            if (State == DoorState.Open || State == DoorState.Closed)
+                mapIcon.Color = Color.white;
             if (State == DoorState.Locked)
-            {
-                anim.SetBool("Open", false);
                 mapIcon.Color = Color.red;
-            }
             else if (State == DoorState.Disabled)
-            {
-                anim.SetBool("Open", false);
                 mapIcon.Color = Color.gray;
-            }
         }
 
         statePrev = State;
@@ -72,8 +62,6 @@ public class Door : MonoBehaviour
         if (!Locked && (other.tag == "Player" || other.tag == "Enemy"))
         {
             State = DoorState.Closed;
-            if (FindObjectOfType<DoorControler>().enabled)
-                mapIcon.MapIcon.GetComponent<Animator>().SetBool("Open", false);
         }
     }
 

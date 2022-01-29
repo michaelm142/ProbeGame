@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 public class DroneController : MonoBehaviour
 {
+    public const int MaxDroneCount = 5;
+
     private Drone activeDrone;
     public Drone ActiveDrone
     {
@@ -27,6 +29,8 @@ public class DroneController : MonoBehaviour
                 activeDrone.SetActive();
         }
     }
+
+    public float correctiveStrength = 100.0f;
 
     public static DroneController Instance { get; private set; }
 
@@ -83,24 +87,32 @@ public class DroneController : MonoBehaviour
             return;
 
         if (Pause.Paused)
-            activeDrone.GetComponent<Rigidbody>().isKinematic = true;
+        {
+            //activeDrone.GetComponent<Rigidbody>().isKinematic = true;
+        }
         else
-        { 
-            activeDrone.GetComponent<Rigidbody>().isKinematic = false;
+        {
             float vertical = Input.GetAxis("Vertical");
             float horizontal = Input.GetAxis("Horizontal");
 
             int droneIndex = drones.IndexOf(activeDrone);
 
-            var body = activeDrone.GetComponent<Rigidbody>();
-            body.velocity = vertical * activeDrone.transform.forward * activeDrone.MoveSpeed * Time.deltaTime;
-            body.AddTorque(Vector3.up * horizontal);
+            float dot_forward = Vector3.Dot(activeDrone.transform.forward, Vector3.up);
+            float dot_right = Vector3.Dot(activeDrone.transform.right, Vector3.up);
 
-            // activeDrone.transform.position += vertical * activeDrone.transform.forward * activeDrone.MoveSpeed * Time.deltaTime;
-            activeDrone.transform.rotation *= Quaternion.AngleAxis(horizontal, Vector3.up);
+            var body = activeDrone.GetComponent<Rigidbody>();
+            float strength = Mathf.Abs(1.0f - Vector3.Dot(activeDrone.transform.up, Vector3.up));
+            body.AddForce(Vector3.up * strength * correctiveStrength);
+            body.AddRelativeForce(Vector3.forward * dot_right * correctiveStrength * strength + Vector3.right * dot_forward * correctiveStrength * strength);
+
+            if (!activeDrone.hacking)
+            {
+                activeDrone.transform.position += vertical * activeDrone.transform.forward * activeDrone.MoveSpeed * Time.deltaTime;
+                activeDrone.transform.rotation *= Quaternion.AngleAxis(horizontal * activeDrone.MoveSpeed, Vector3.up);
+            }
         }
 #if FALSE
-        float moveAxis = Input.GetAxis(MoveInputAxis);
+        float moveAxis = Input.GetAxis("Fire1");
         if (ActiveDrone != null && moveAxis > 0.1f && moveAxisPrev < 0.1f)
         {
             var raycaster = GetComponent<GraphicRaycaster>();
@@ -128,6 +140,7 @@ public class DroneController : MonoBehaviour
         moveAxisPrev = moveAxis;
 #endif
     }
+    private float moveAxisPrev;
 
     public void DroneDestroyed(Drone drone)
     {
@@ -155,8 +168,28 @@ public class DroneController : MonoBehaviour
         ActiveDrone = drones[index];
     }
 
-    public void ConnectDrone(GameObject subsystem)
+    public void BeginHacking(GameObject subsystem)
     {
+        var game = GetComponentInChildren<DroneUIController>().hackingMinigame;
+        game.gameObject.SetActive(true);
+        game.LoadConfiguration("Config_Level7_2.lvlconfig");
+        game.ConnectedSubsystem = subsystem;
+    }
+
+    public void StopHacking()
+    {
+        var game = GetComponentInChildren<DroneUIController>().hackingMinigame;
+        game.ConnectedSubsystem = null;
+        game.gameObject.SetActive(false);
+    }
+
+    public void ConnectDrone()
+    {
+        var game = GetComponentInChildren<HackingMinigame>();
+        game.RestartGame();
+        game.gameObject.SetActive(false);
+        var subsystem = game.ConnectedSubsystem;
+        subsystem.SendMessage("ActivateSubsystem");
         ActiveDrone.connectedSubsystem = subsystem;
         transform.Find("ProbeStatus/HackingOverlay").gameObject.SetActive(true);
     }

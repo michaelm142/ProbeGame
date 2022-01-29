@@ -21,6 +21,8 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         version.text = Application.version;
+        foreach (var inventory in FindObjectsOfType<PlayerInventory>())
+            Destroy(inventory.gameObject);
     }
 
     // Update is called once per frame
@@ -35,7 +37,7 @@ public class MainMenu : MonoBehaviour
         saveFiles.Sort(delegate (FileInfo a, FileInfo b)
         {
             if (b.CreationTime.Ticks > a.CreationTime.Ticks)
-                return -1;
+                return 1;
 
             return 0;
         });
@@ -74,6 +76,7 @@ public class MainMenu : MonoBehaviour
 
             var inventoryObj = new GameObject("PlayerInventory");
             var inventory = inventoryObj.AddComponent<PlayerInventory>();
+            inventory.Metal = 2000.0f;
             inventory.activeSaveFile = newFile;
 
             SceneManager.LoadScene("StoreScreen");

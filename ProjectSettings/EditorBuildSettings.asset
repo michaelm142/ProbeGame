@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VonBron.unity
     guid: fd3ff7027e166fb4a9907c8e7679240a
+  - enabled: 1
+    path: Assets/Scenes/LoadingScreen.unity
+    guid: 37470cefd008c9b4dacfbc6eda030f2f
   m_configObjects: {}

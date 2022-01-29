@@ -36,7 +36,7 @@ public class MinimapIconManager : MonoBehaviour
 
     Quaternion GetMapRotation(Quaternion rotation)
     {
-        return Quaternion.AngleAxis(rotation.eulerAngles.y - 90.0f, Vector3.back);
+        return Quaternion.AngleAxis(rotation.eulerAngles.y, Vector3.back);// * minimapCamera.transform.localToWorldMatrix.rotation;
     }
 
     public Transform AddIcon(Texture2D sprite, Color color, Button.ButtonClickedEvent OnClicked = null, string name = null)
@@ -114,7 +114,7 @@ public class MinimapIconManager : MonoBehaviour
                 icon.transform.localPosition = GetMapPosition(trackedObj.transform.position);
                 icon.GetComponent<Image>().color = trackedObj.Color;
                 if (trackedObj.RotateWithObject)
-                    icon.transform.localRotation = GetMapRotation(trackedObj.transform.rotation);
+                    icon.transform.localRotation = GetMapRotation(trackedObj.transform.rotation * Quaternion.Euler(Vector3.up * trackedObj.GetComponent<MiniMapIcon>().rotationOffset));
             }
         }
     }

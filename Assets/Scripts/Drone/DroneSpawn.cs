@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class DroneSpawn : MonoBehaviour
 {
-    public GameObject dronePrefab;
+    public GameObject hackerDronePrefab;
+    public GameObject combatDronePrefab;
+    public GameObject scoutDronePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +23,25 @@ public class DroneSpawn : MonoBehaviour
             if (i < inventory.probes.Count)
             {
                 var probe = inventory.probes[i];
-                var drone = Instantiate(dronePrefab);
+                GameObject drone = null;
+                switch (probe.type)
+                {
+                    case DroneType.Hacker:
+                        drone = Instantiate(hackerDronePrefab);
+                        break;
+                    case DroneType.Combat:
+                        drone = Instantiate(combatDronePrefab);
+                        break;
+                    case DroneType.Scout:
+                        drone = Instantiate(scoutDronePrefab);
+                        break;
+                }
 
                 // position and rotate drone
                 drone.transform.position = spawnPoints[i].position;
                 drone.transform.rotation = spawnPoints[i].rotation;
+                if (probe.type == DroneType.Scout)
+                    drone.transform.position += Vector3.up;
 
                 var opticsUpgrade = probe.upgrades.Find(u => u.type == DroneUpgradeType.Optics);
                 // enable probe upgrades

@@ -21,14 +21,24 @@ public class LevelEnd : MonoBehaviour
     void Interact()
     {
         if (DroneController.Instance.DroneCount == localDrones.Count)
-            FindObjectOfType<MenuControls>().LoadLevel("StoreScreen");
+        {
+            FindObjectOfType<MenuControls>().LoadLevel("EndOfLevelScreen");
+            var playerInventory = FindObjectOfType<PlayerInventory>();
+            foreach (var inventory in FindObjectsOfType<DroneInventory>())
+            {
+                playerInventory.Metal += inventory.Metal;
+                playerInventory.Energy += inventory.Energy;
+
+                Destroy(inventory.gameObject);
+            }
+        }
         else
             MessageBox.Show("All drones must be aboard before you can leave");
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !localDrones.Contains(other.gameObject))
             localDrones.Add(other.gameObject);
     }
 

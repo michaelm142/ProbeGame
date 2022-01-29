@@ -176,7 +176,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 1157473516}
   LevelLabel: {fileID: 873186538}
-  Cost: 0
+  Cost: 250
 --- !u!1 &66383168
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,52 +445,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104514858}
   m_CullTransparentMesh: 1
---- !u!1 &127521609
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 127521611}
-  - component: {fileID: 127521610}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &127521610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127521609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95d39a4c4b2cdd341923e088616e18de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NumStartProbes: 0
-  Energy: 0
-  Metal: 0
---- !u!4 &127521611
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127521609}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 772.41473, y: 750.21405, z: -15.05722}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &134626937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,7 +1022,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 826580016}
   LevelLabel: {fileID: 1710477387}
-  Cost: 0
+  Cost: 250
 --- !u!1 &259835790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,6 +1209,85 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284322862}
+  m_CullTransparentMesh: 1
+--- !u!1 &287417225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 287417226}
+  - component: {fileID: 287417228}
+  - component: {fileID: 287417227}
+  m_Layer: 5
+  m_Name: MetalCount
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &287417226
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287417225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 473149122}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.6922449, y: 0.0183909}
+  m_AnchorMax: {x: 0.7555613, y: 0.10123863}
+  m_AnchoredPosition: {x: -0.70996094, y: 2.1099854}
+  m_SizeDelta: {x: 1.4699707, y: -1.4769897}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &287417227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287417225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.5882353, g: 0.8666667, b: 0.9137255, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 8297a2bf97dbbba468bd2518d003a876, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 5
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0000
+--- !u!222 &287417228
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287417225}
   m_CullTransparentMesh: 1
 --- !u!1 &314787473
 GameObject:
@@ -1898,18 +1931,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 379489422}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &379489423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2093,18 +2114,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 451074102}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &451074103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2176,6 +2185,8 @@ RectTransform:
   - {fileID: 1087334414}
   - {fileID: 1358732033}
   - {fileID: 829341287}
+  - {fileID: 287417226}
+  - {fileID: 827915122}
   m_Father: {fileID: 1745889949}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2398,18 +2409,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: DronePurchaseing, Assembly-CSharp
         m_MethodName: BuyProbe
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 503821700}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3171,18 +3170,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 597924794}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &597924795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3405,18 +3392,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 662875299}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &662875300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3587,7 +3562,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 1131968685}
   LevelLabel: {fileID: 592541272}
-  Cost: 0
+  Cost: 250
 --- !u!1 &737821002
 GameObject:
   m_ObjectHideFlags: 0
@@ -3822,6 +3797,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826580014}
   m_CullTransparentMesh: 1
+--- !u!1 &827915121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 827915122}
+  - component: {fileID: 827915124}
+  - component: {fileID: 827915123}
+  m_Layer: 5
+  m_Name: MetalIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &827915122
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827915121}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 473149122}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.7555613, y: 0.0183909}
+  m_AnchorMax: {x: 0.7846328, y: 0.10123863}
+  m_AnchoredPosition: {x: 1.8599854, y: 1.6099854}
+  m_SizeDelta: {x: 1.661377, y: -2.4769897}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &827915123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827915121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.5882353, g: 0.8666667, b: 0.9137255, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 3abed3f48f877b94c8f974430ccfdb82, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &827915124
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827915121}
+  m_CullTransparentMesh: 1
 --- !u!1 &829204842
 GameObject:
   m_ObjectHideFlags: 0
@@ -4004,7 +4054,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 1584876896}
   LevelLabel: {fileID: 591203592}
-  Cost: 0
+  Cost: 250
 --- !u!1 &853768196
 GameObject:
   m_ObjectHideFlags: 0
@@ -5654,7 +5704,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 1442144470}
   LevelLabel: {fileID: 217367980}
-  Cost: 0
+  Cost: 250
 --- !u!1 &1225002695
 GameObject:
   m_ObjectHideFlags: 0
@@ -6432,7 +6482,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 1658971635}
   LevelLabel: {fileID: 1977155090}
-  Cost: 0
+  Cost: 250
 --- !u!1 &1423421012
 GameObject:
   m_ObjectHideFlags: 0
@@ -6672,7 +6722,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 1857777344}
   LevelLabel: {fileID: 1579161666}
-  Cost: 0
+  Cost: 250
 --- !u!1 &1442144468
 GameObject:
   m_ObjectHideFlags: 0
@@ -7067,7 +7117,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 635403093}
   LevelLabel: {fileID: 1228723525}
-  Cost: 0
+  Cost: 250
 --- !u!1 &1511119588
 GameObject:
   m_ObjectHideFlags: 0
@@ -7944,7 +7994,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 1029283676}
   LevelLabel: {fileID: 1009890893}
-  Cost: 0
+  Cost: 250
 --- !u!1 &1683347979
 GameObject:
   m_ObjectHideFlags: 0
@@ -8463,6 +8513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbd430e8c676d646a56fd9727d84eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MetalCount: {fileID: 287417227}
   MainPage: {fileID: 1745889952}
 --- !u!95 &1745889952
 Animator:
@@ -9136,7 +9187,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 550737598}
   LevelLabel: {fileID: 156345396}
-  Cost: 0
+  Cost: 250
 --- !u!1 &1896452917
 GameObject:
   m_ObjectHideFlags: 0
@@ -9190,7 +9241,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 876799678}
   LevelLabel: {fileID: 1490459296}
-  Cost: 0
+  Cost: 250
 --- !u!1 &1913093119
 GameObject:
   m_ObjectHideFlags: 0
@@ -9244,7 +9295,7 @@ MonoBehaviour:
   buttonClick: {fileID: 1452629175}
   Checkmark: {fileID: 1849357056}
   LevelLabel: {fileID: 1848745418}
-  Cost: 0
+  Cost: 250
 --- !u!1 &1917321084
 GameObject:
   m_ObjectHideFlags: 0

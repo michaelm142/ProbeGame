@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StoreScreen : MonoBehaviour
 {
+    public Text MetalCount;
+
     public Animator MainPage;
 
     private DronePurchaseing activeSlot;
@@ -16,7 +19,7 @@ public class StoreScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        MetalCount.text = ((int)FindObjectOfType<PlayerInventory>().Metal).ToString();
     }
 
     public void BeginBuyDrone(DronePurchaseing slot)
@@ -32,7 +35,12 @@ public class StoreScreen : MonoBehaviour
 
     public void BuyDrone(DroneType type)
     {
-        activeSlot.drone = FindObjectOfType<PlayerInventory>().BuyDrone(type);
+        var drone = FindObjectOfType<PlayerInventory>().BuyDrone(type);
+        if (drone != null)
+        {
+            activeSlot.transform.parent.GetComponentInChildren<Button>().interactable = false;
+            activeSlot.drone = drone;
+        }
         MainPage.SetTrigger("MainPage");
     }
 

@@ -32,10 +32,14 @@ public class DoorControler : MonoBehaviour
 
     public void Interact()
     {
+        DroneController.Instance.BeginHacking(gameObject);
+    }
+
+    void ActivateSubsystem()
+    {
         enabled = true;
         foreach (Door d in doors)
             d.GetComponent<MiniMapIcon>().enabled = true;
-        DroneController.Instance.ConnectDrone(gameObject);
     }
 
     void Disconnect()

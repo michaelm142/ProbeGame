@@ -139,11 +139,6 @@ public class HackingTile : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         get { return sprite == Node || sprite == ConnectedNode; }
     }
 
-    private bool IsPipeAndColor(HackingTile tile)
-    {
-        return tile != null && (tile.sprite == Pipe || (tile.Color == Color && tile.IsNode)) && tile.GetComponent<Image>().color == GetComponent<Image>().color;
-    }
-
     public void OnPointerUp(PointerEventData eventData)
     {
         game.previouslyPressed = null;

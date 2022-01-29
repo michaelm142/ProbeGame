@@ -70,8 +70,10 @@ GameObject:
   - component: {fileID: 7655624992838247373}
   - component: {fileID: 4595672920351558819}
   - component: {fileID: -8205645074205250585}
-  - component: {fileID: 6637490359032180658}
   - component: {fileID: 7684522695235017295}
+  - component: {fileID: 5725963702951990408}
+  - component: {fileID: 6512550403629033770}
+  - component: {fileID: 3310023260802668246}
   m_Layer: 7
   m_Name: Drone
   m_TagString: Player
@@ -87,7 +89,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7655624992838247409}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -41.48, y: 0, z: 40}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7655624994112119155}
@@ -110,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PrefabOverride: {fileID: 0}
+  rotationOffset: 0
   Icon: {fileID: 2800000, guid: f5412e83016dd984da8f81e46efa2cfe, type: 3}
   Color: {r: 1, g: 1, b: 1, a: 1}
   RotateWithObject: 1
@@ -144,7 +147,8 @@ MonoBehaviour:
   connectedSubsystem: {fileID: 0}
   MaxHealth: 8
   Health: 0
-  MoveSpeed: 55.42
+  MoveSpeed: 3
+  type: 0
 --- !u!114 &-8205645074205250585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,22 +186,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   movingAudio: {fileID: 8300000, guid: f09042a5456637e47900e62a3982485f, type: 3}
---- !u!54 &6637490359032180658
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7655624992838247409}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 5.56
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!65 &7684522695235017295
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -209,8 +197,52 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.42, y: 1.0716046, z: 1.87}
-  m_Center: {x: 0, y: 0.5323486, z: 0}
+  m_Size: {x: 1.42, y: 0.5408066, z: 1.87}
+  m_Center: {x: 0, y: 0.7977476, z: 0}
+--- !u!54 &5725963702951990408
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7655624992838247409}
+  serializedVersion: 2
+  m_Mass: 100
+  m_Drag: 5
+  m_AngularDrag: 0.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &6512550403629033770
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7655624992838247409}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.29
+  m_Height: 2.44
+  m_Direction: 2
+  m_Center: {x: -0.61, y: 0.25, z: 0}
+--- !u!136 &3310023260802668246
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7655624992838247409}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.29
+  m_Height: 2.44
+  m_Direction: 2
+  m_Center: {x: 0.59, y: 0.25, z: 0}
 --- !u!1 &7655624993776063149
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +346,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7655624994112119155}
   - component: {fileID: 7655624994112119156}
-  - component: {fileID: 7655624994112119154}
   - component: {fileID: 5363002352168353407}
   m_Layer: 7
   m_Name: Camera
@@ -331,7 +362,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7655624994112119158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.28, z: 1.071}
+  m_LocalPosition: {x: 0, y: 1.28, z: 0.677}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7655624992838247375}
@@ -360,7 +391,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -368,7 +399,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 183
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -380,19 +411,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &7655624994112119154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7655624994112119158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: ff2330afae52142f4978b38a8531c412, type: 2}
 --- !u!95 &5363002352168353407
 Animator:
   serializedVersion: 3

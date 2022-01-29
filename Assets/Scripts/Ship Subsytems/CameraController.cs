@@ -58,7 +58,11 @@ public class CameraController : MonoBehaviour
 
     void Interact()
     {
-        DroneController.Instance.ConnectDrone(gameObject);
+        DroneController.Instance.BeginHacking(gameObject);
+    }
+
+    void ActivateSubsystem()
+    {
         foreach (var camera in GameObject.FindGameObjectsWithTag("SecurityCamera"))
             camera.GetComponent<MiniMapIcon>().enabled = true;
     }

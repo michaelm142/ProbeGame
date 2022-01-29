@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,12 +9,14 @@ public class DroneUIController : MonoBehaviour
 {
     public GameObject healthBar;
     public GameObject DamageDirectionIndicator;
-    public GameObject DroneControlUIElement;
     public GameObject HackingOverlay;
+    public GameObject DroneButtonPanel;
+    public GameObject ScoutReticlue;
 
     private Image damageDirectionIndicatorImage;
     private Image healthBarImage;
     public Image energyBar;
+    public Image ScanMeter;
 
     public Text MetalCount;
     public Text MetalCountChanged;
@@ -29,6 +32,8 @@ public class DroneUIController : MonoBehaviour
     public GameObject GameOverScreen;
 
     public Animator InventoryChangedAnimator;
+
+    public HackingMinigame hackingMinigame;
 
     void Awake()
     {
@@ -92,14 +97,25 @@ public class DroneUIController : MonoBehaviour
         else
             healthBar.SetActive(true);
 
+        var activeDrone = DroneController.Instance.ActiveDrone;
         if (currentCamera.transform.parent.tag == "SecurityCamera")
             HUDAudioController.PlaySound(switchToCamera);
-        else if (DroneController.Instance.ActiveDrone != null)
+        else if (activeDrone != null)
         {
-            if (DroneController.Instance.ActiveDrone.GetComponentInChildren<DroneGunAim>() == null)
+            if (activeDrone.type == DroneType.Hacker)
+            {
+                ScoutReticlue.SetActive(false);
                 HUDAudioController.PlaySound(SwitchToDrone);
-            else
+            }
+            else if (activeDrone.type == DroneType.Combat)
+            {
+                ScoutReticlue.SetActive(false);
                 HUDAudioController.PlaySound(SwitchToCombatDrone);
+            }
+            else if (activeDrone.type == DroneType.Scout)
+            {
+                ScoutReticlue.SetActive(true);
+            }    
         }
 
         if (CameraController.instance.ActiveCamera.transform.parent != null && CameraController.instance.ActiveCamera.transform.parent.tag == "Player")
@@ -119,6 +135,20 @@ public class DroneUIController : MonoBehaviour
         if (drone == null)
             return;
 
+        if (drone.type != DroneType.Scout)
+        {
+            if (ScanMeter.gameObject.activeSelf)
+                ScanMeter.gameObject.SetActive(false);
+        }
+        else
+        {
+            if (!ScanMeter.gameObject.activeSelf)
+                ScanMeter.gameObject.SetActive(true);
+
+            var scanner = drone.GetComponent<DroneScanner>();
+            ScanMeter.fillAmount = scanner.Value / scanner.MaxValue;
+        }
+
         int totalMetal = 0;
         float totalEnergy = 0.0f;
         foreach (var d in FindObjectsOfType<DroneInventory>())
@@ -137,6 +167,14 @@ public class DroneUIController : MonoBehaviour
         c.a = damageIndicatorAlpha;
         damageDirectionIndicatorImage.color = c;
 
+        var buttons = DroneButtonPanel.GetComponentsInChildren<Button>();
+        int activeIndex = DroneController.Instance.Drones.ToList().IndexOf(drone);
+        foreach (Button b in buttons)
+            b.interactable = true;
+
+        buttons[activeIndex].interactable = false;
+        for (int i = DroneController.Instance.DroneCount; i < DroneController.MaxDroneCount; i++)
+            buttons[i].interactable = false;
     }
 
     void OnDroneDamaged(float angle)

@@ -40,6 +40,33 @@ public class PlayerInventory : MonoBehaviour
     public Drone BuyDrone(DroneType type)
     {
         var p = new Drone(type);
+        switch (type)
+        {
+            case DroneType.Combat:
+                if (Metal < 1000.0f)
+                {
+                    MessageBox.Show("Not enough metal");
+                    return null;
+                }
+                Metal -= 1000.0f;
+                break;
+            case DroneType.Hacker:
+                if (Metal < 500.0f)
+                {
+                    MessageBox.Show("Not enough metal");
+                    return null;
+                }
+                Metal -= 500.0f;
+                break;
+            case DroneType.Scout:
+                if (Metal < 850.0f)
+                {
+                    MessageBox.Show("Not enough metal");
+                    return null;
+                }
+                Metal -= 850.0f;
+                break;
+        }
         probes.Add(p);
 
         return p;

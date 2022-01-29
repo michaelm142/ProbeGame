@@ -58,10 +58,13 @@ public class MiniMapClickNavigation : MonoBehaviour, IPointerDownHandler
         samplePos.y = 1.0f - samplePos.y;
         samplePos.x *= sampleBuffer.width;
         samplePos.y *= sampleBuffer.height;
-        if (pixelBuffer[(int)samplePos.x + (int)samplePos.y * sampleBuffer.width].a == 0 && !ActiveDrone.hacking)
+        if (pixelBuffer[(int)samplePos.x + (int)samplePos.y * sampleBuffer.width].a != 0 && !ActiveDrone.hacking)
         {
              if (!IgnoreNextClick && agent != null)
-                agent.SetDestination(minimapCamera.transform.position + vertical + horizontal);
+            {
+                var pos = minimapCamera.transform.position + vertical + horizontal;
+                agent.SetDestination(pos);
+            }
             else
                 IgnoreNextClick = false;
             OnClick?.Invoke(minimapCamera.transform.position + vertical + horizontal, new System.EventArgs());
@@ -73,9 +76,10 @@ public class MiniMapClickNavigation : MonoBehaviour, IPointerDownHandler
     void Start()
     {
         sampleBuffer = new Texture2D(rt.width, rt.height, TextureFormat.ARGB32, false);
-        RenderTexture.active = rt;
+        RenderTexture.active = rt;minimapCamera.Render();
         sampleBuffer.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
         sampleBuffer.Apply();
+        GetComponent<RawImage>().texture = sampleBuffer;
 
         pixelBuffer = sampleBuffer.GetPixels();
 

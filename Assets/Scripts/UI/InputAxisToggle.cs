@@ -13,7 +13,6 @@ public class InputAxisToggle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        axisValuePrev = Input.GetAxis(AxisName);
     }
 
     // Update is called once per frame

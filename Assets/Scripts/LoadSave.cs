@@ -35,6 +35,7 @@ public class LoadSave : MonoBehaviour
         foreach (XmlElement probeNode in probeNodes)
         {
             PlayerInventory.Drone probe = new PlayerInventory.Drone();
+            probe.type = (DroneType)Enum.Parse(typeof(DroneType), probeNode.Attributes["Type"].Value);
 
             foreach (DroneUpgradeType upgradeType in Enum.GetValues(typeof(DroneUpgradeType)))
             {
@@ -52,7 +53,8 @@ public class LoadSave : MonoBehaviour
 
             playerInventory.probes.Add(probe);
         }
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+
+        AsyncSceneLoader.LoadScene(sceneName);
     }
 
     public static void LoadProgress(int slotIndex)
@@ -84,6 +86,10 @@ public class LoadSave : MonoBehaviour
         foreach (var probe in inventory.probes)
         {
             var probeNode = doc.CreateElement("Probe");
+            var typeAttr = doc.CreateAttribute("Type");
+            typeAttr.Value = probe.type.ToString();
+            probeNode.Attributes.Append(typeAttr);
+
             foreach (var upgrade in probe.upgrades)
             {
                 var upgradeElement = doc.CreateElement(upgrade.ToString());

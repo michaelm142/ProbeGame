@@ -9,6 +9,8 @@ public class MiniMapIcon : MonoBehaviour
 
     public GameObject PrefabOverride;
 
+    public float rotationOffset;
+
     public Texture2D Icon;
 
     public Color Color = Color.white;

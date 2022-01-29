@@ -5,9 +5,11 @@ Shader "UI/MiniMapUIShader"
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
-		_Mask("Mask", 2D) = "white" {} 
 		_OutlineColor("OutlineColor", Color) = (1.0, 1.0, 1.0, 1.0)
+		_BackgroundColor("Background Color", Color) = (1.0, 1.0, 1.0, 1.0)
 		_OutlineWidth("OutlineWidth", Int) = 1
+		_MainTex_TexelSize("Texture Size", Float) = 1.0
+		_Threshold("Threshold", Float) = 1.0
 	}
 		SubShader
 		{
@@ -40,7 +42,6 @@ Shader "UI/MiniMapUIShader"
 				};
 
 				sampler2D _MainTex;
-				sampler2D _Mask;
 				float2 samples[9] = { float2(-1.0, -1.0f),
 									  float2(0.0, -1.0f),
 									  float2(1.0, -1.0),
@@ -51,8 +52,10 @@ Shader "UI/MiniMapUIShader"
 									  float2(0.0, 1.0),
 									  float2(1.0, 1.0), };
 				float4 _MainTex_ST;
-				float4 _MainTex_TexelSize;
 				float4 _OutlineColor;
+				float4 _BackgroundColor;
+				float _MainTex_TexelSize;
+				float _Threshold;
 				int _OutlineWidth;
 
 				v2f vert(appdata v)
@@ -71,14 +74,17 @@ Shader "UI/MiniMapUIShader"
 					float4 c = (float4)0;
 					if (col.a != 0.f)
 					{
+						float weight = 0.0f;
 						for (int index = 0; index < 9; index++)
 						{
-							c = tex2D(_Mask, i.uv + samples[index] * _OutlineWidth);
-							if (c.r == 0)
-								return _OutlineColor;
+							c = tex2D(_MainTex, i.uv + (samples[index] * _OutlineWidth) / _MainTex_TexelSize);
+							weight += 1.0f - c.a;
 						}
+
+						return lerp(_BackgroundColor, _OutlineColor, saturate(weight / 8.0f));
+
 					}
-					return col;
+					return col;// fixed4(0.0f, 0.0f, 0.0f, 0.0f);
 				}
 				ENDCG
 			}
