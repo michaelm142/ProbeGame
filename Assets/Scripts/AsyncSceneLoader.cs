@@ -19,7 +19,9 @@ public class AsyncSceneLoader : MonoBehaviour
 
     const float Lifetime = 1.0f;
     private float timer;
-    
+
+    private bool LoadComplete;
+
     private void Start()
     {
         timer = Lifetime;
@@ -30,9 +32,19 @@ public class AsyncSceneLoader : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
-            SceneManager.LoadSceneAsync(sceneName);
-            LoadSave.SaveProgress();
+            var operation = SceneManager.LoadSceneAsync(sceneName);
+            operation.completed += LevelLoadOperation;
+            enabled = false;
+        }
+    }
+
+    private void LevelLoadOperation(AsyncOperation obj)
+    {
+        if (obj.isDone && !LoadComplete)
+        {
+            LoadSave.SaveProgress(false);
             Destroy(gameObject);
+            LoadComplete = true;
         }
     }
 }

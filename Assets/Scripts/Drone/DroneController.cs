@@ -100,10 +100,19 @@ public class DroneController : MonoBehaviour
             float dot_forward = Vector3.Dot(activeDrone.transform.forward, Vector3.up);
             float dot_right = Vector3.Dot(activeDrone.transform.right, Vector3.up);
 
-            var body = activeDrone.GetComponent<Rigidbody>();
-            float strength = Mathf.Abs(1.0f - Vector3.Dot(activeDrone.transform.up, Vector3.up));
-            body.AddForce(Vector3.up * strength * correctiveStrength);
-            body.AddRelativeForce(Vector3.forward * dot_right * correctiveStrength * strength + Vector3.right * dot_forward * correctiveStrength * strength);
+            var activeCam = activeDrone.GetComponentInChildren<Camera>();
+
+            RaycastHit hit;
+            if (Physics.Raycast(activeCam.transform.position, activeCam.transform.forward, out hit, 1.0f))
+            {
+                if (hit.distance < 1.0f && hit.collider.gameObject.isStatic)
+                    vertical = Mathf.Clamp(vertical, -1.0f, 0.0f);
+            }
+            if (Physics.Raycast(activeCam.transform.position + Vector3.down * 0.5f, activeCam.transform.forward, out hit, 1.0f))
+            {
+                if (hit.distance < 1.0f && hit.collider.gameObject.isStatic)
+                    vertical = Mathf.Clamp(vertical, -1.0f, 0.0f);
+            }
 
             if (!activeDrone.hacking)
             {
@@ -172,7 +181,10 @@ public class DroneController : MonoBehaviour
     {
         var game = GetComponentInChildren<DroneUIController>().hackingMinigame;
         game.gameObject.SetActive(true);
-        game.LoadConfiguration("Config_Level7_2.lvlconfig");
+        int level = 5;
+        int version = Random.Range(1, 3);
+        string levelName = string.Format("Config_Level{0}_{1}.lvlconfig", level, version);
+        game.LoadConfiguration(levelName);
         game.ConnectedSubsystem = subsystem;
     }
 

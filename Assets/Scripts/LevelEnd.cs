@@ -6,30 +6,28 @@ public class LevelEnd : MonoBehaviour
 {
     private List<GameObject> localDrones = new List<GameObject>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void Interact()
     {
         if (DroneController.Instance.DroneCount == localDrones.Count)
         {
-            FindObjectOfType<MenuControls>().LoadLevel("EndOfLevelScreen");
-            var playerInventory = FindObjectOfType<PlayerInventory>();
+            float energyAmmount = 0.0f;
             foreach (var inventory in FindObjectsOfType<DroneInventory>())
+                energyAmmount += inventory.Energy;
+            if (energyAmmount < 100.0f)
             {
-                playerInventory.Metal += inventory.Metal;
-                playerInventory.Energy += inventory.Energy;
+                MessageBox.Show("We still don't have enough energy to power the ship!");
+            }
+            else
+            {
+                FindObjectOfType<MenuControls>().LoadLevel("EndOfLevelScreen");
+                var playerInventory = FindObjectOfType<PlayerInventory>();
+                foreach (var inventory in FindObjectsOfType<DroneInventory>())
+                {
+                    playerInventory.Metal += inventory.Metal;
+                    playerInventory.Energy += inventory.Energy;
 
-                Destroy(inventory.gameObject);
+                    Destroy(inventory.gameObject);
+                }
             }
         }
         else

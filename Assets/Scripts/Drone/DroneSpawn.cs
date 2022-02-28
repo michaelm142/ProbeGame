@@ -20,9 +20,9 @@ public class DroneSpawn : MonoBehaviour
         }
         for (int i = 0; i < spawnPoints.Count; i++)
         {
-            if (i < inventory.probes.Count)
+            if (i < inventory.drones.Count)
             {
-                var probe = inventory.probes[i];
+                var probe = inventory.drones[i];
                 GameObject drone = null;
                 switch (probe.type)
                 {
@@ -43,12 +43,14 @@ public class DroneSpawn : MonoBehaviour
                 if (probe.type == DroneType.Scout)
                     drone.transform.position += Vector3.up;
 
-                var opticsUpgrade = probe.upgrades.Find(u => u.type == DroneUpgradeType.Optics);
+                var sensorsUpgrade = probe.upgrades.Find(u => u.type == DroneUpgradeType.Sensor);
                 // enable probe upgrades
-                if (opticsUpgrade != null)
+                if (sensorsUpgrade != null)
                 {
                     var sensors = drone.GetComponent<DroneSensors>();
-                    switch (opticsUpgrade.Level)
+                    if (sensors == null)
+                        sensors = drone.GetComponentInChildren<DroneSensors>();
+                    switch (sensorsUpgrade.Level)
                     {
 
                         case 1:
@@ -86,13 +88,13 @@ public class DroneSpawn : MonoBehaviour
                     switch (speedUpgrade.Level)
                     {
                         case 1:
-                            drone.GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 3.5f;
+                            drone.GetComponent<Drone>().MoveSpeed = 3.5f;
                             break;
                         case 2:
-                            drone.GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 5.0f;
+                            drone.GetComponent<Drone>().MoveSpeed = 5.0f;
                             break;
                         case 3:
-                            drone.GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 7.0f;
+                            drone.GetComponent<Drone>().MoveSpeed = 7.0f;
                             break;
                     }
                 }

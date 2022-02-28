@@ -21,7 +21,7 @@ public class ProbeStoreUpgrade : MonoBehaviour, IPointerClickHandler, IPointerEn
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (purchaseing.UpgradeProbe((int)Type))
+        if (purchaseing.UpgradeProbe(Type))
         {
             Checkmark.gameObject.SetActive(true);
             OnPointerEnter(eventData);

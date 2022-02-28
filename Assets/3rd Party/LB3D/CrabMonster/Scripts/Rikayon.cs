@@ -114,9 +114,4 @@ public class Rikayon : MonoBehaviour
         source.clip = attackAudio[randomAudioIndex];
         source.Play();
     }
-
-    public void DoDamage(float damage)
-    {
-        if (currentTarget != null) currentTarget.SendMessage("Damage", new object[] { damage, transform.position }, SendMessageOptions.DontRequireReceiver);
-    }
 }

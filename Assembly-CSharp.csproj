@@ -74,11 +74,13 @@
     <Compile Include="Assets\SampleScenes\Scripts\LevelReset.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
     <Compile Include="Assets\Scripts\Ship Subsytems\CameraController.cs" />
+    <Compile Include="Assets\Scripts\CorrectRotation.cs" />
     <Compile Include="Assets\Scripts\UI\Menus\MenuControls.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\ActiveElements\ActiveTransform.cs" />
     <Compile Include="Assets\Scripts\ActionDoer.cs" />
     <Compile Include="Assets\TransformingRobot\Scripts\TransformingRobotCharacter.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
+    <Compile Include="Assets\Scripts\UI\ScaleRectToText.cs" />
     <Compile Include="Assets\Scripts\UI\HackingMinigame.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\[dlnk Script Library]\Basic Scripts\Misc\LightTilt.cs" />
     <Compile Include="Assets\3rd Party\Sci-Fi UI\Demo_Assets\scripts\GUI_Demo.cs" />
@@ -149,6 +151,7 @@
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\ActiveElements\ActiveEnableGo.cs" />
     <Compile Include="Assets\3rd Party\LB3D\CrabMonster\Scripts\Rikayon.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\Space Base Pack\Scenes\Demo Base\Source\Scripts\FreeCamera.cs" />
+    <Compile Include="Assets\Scripts\CutsceneController.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\[dlnk Script Library]\Basic Scripts\Transform\Compass.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\TDLevel.cs" />
     <Compile Include="Assets\Scripts\UI\ProbeStoreUpgrade.cs" />
@@ -158,14 +161,18 @@
     <Compile Include="Assets\Scripts\UI\Menus\MainMenu.cs" />
     <Compile Include="Assets\Scripts\UI\Menus\GraphicsSettingsController.cs" />
     <Compile Include="Assets\Scripts\Drone\DroneInventory.cs" />
+    <Compile Include="Assets\Scripts\AsyncSceneLoader.cs" />
+    <Compile Include="Assets\Scripts\UI\Menus\LoreBox.cs" />
     <Compile Include="Assets\Scripts\Drone\DroneSensors.cs" />
     <Compile Include="Assets\Scripts\UI\InteractionSystem.cs" />
     <Compile Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\TopDown Wizard\Source\Scripts\TDGroup.cs" />
     <Compile Include="Assets\Scripts\UI\TickerText.cs" />
-    <Compile Include="Assets\Scripts\AsyncSceneLoader.cs" />
+    <Compile Include="Assets\Scripts\LoreObjectInteractible.cs" />
+    <Compile Include="Assets\3rd Party\Zombie\Zombie.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\3rd Party\_DLNK\_DLNK Source\_DLNK Libraries\[dlnk Shader Library]\[Legacy Shaders]\3 Special\ShadowPass.shader" />
+     <None Include="Assets\Lore\LoreTest.txt" />
      <None Include="Assets\Environment\Materials\Textures\Shaders\FOW.compute" />
      <None Include="Assets\Environment\Materials\Textures\Shaders\MiniMapUIShader.shader" />
      <None Include="Assets\3rd Party\LB3D\CrabMonster\DOCUMENTATION.txt" />
@@ -177,6 +184,7 @@
      <None Include="Assets\3rd Party\_DLNK\Space Base Pack\SpaceBase.txt" />
      <None Include="Assets\3rd Party\QuickOutline\Readme.txt" />
      <None Include="Assets\3rd Party\DeepSpaceSkyboxPack\GalacticGreen\Galactic Green Skybox Readme.txt" />
+     <None Include="Assets\Lore\VonBronFlightManifest.txt" />
      <None Include="Assets\TransformingRobot\readme.txt" />
      <None Include="Assets\3rd Party\QuickOutline\Resources\Shaders\OutlineFill.shader" />
     <Reference Include="UnityEngine">

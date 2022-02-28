@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5372821422200117291}
-  - component: {fileID: 3591124016729311286}
   - component: {fileID: 7739413644149680219}
+  - component: {fileID: 328185481681671469}
   m_Layer: 7
   m_Name: DroneSensors
   m_TagString: Untagged
@@ -32,19 +32,6 @@ Transform:
   m_Father: {fileID: 7655624992838247375}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3591124016729311286
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148687037717923416}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7739413644149680219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,6 +45,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Radius: 5
+--- !u!135 &328185481681671469
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148687037717923416}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7655624992838247409
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 5725963702951990408}
   - component: {fileID: 6512550403629033770}
   - component: {fileID: 3310023260802668246}
+  - component: {fileID: -1890474297503015073}
   m_Layer: 7
   m_Name: Drone
   m_TagString: Player
@@ -243,6 +244,19 @@ CapsuleCollider:
   m_Height: 2.44
   m_Direction: 2
   m_Center: {x: 0.59, y: 0.25, z: 0}
+--- !u!114 &-1890474297503015073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7655624992838247409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e09b613561eb08d42954a8aeec672e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 1
 --- !u!1 &7655624993776063149
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 933451251499318747}
   - component: {fileID: 4334384241531955508}
   - component: {fileID: 7385422422235686794}
+  - component: {fileID: 5202506747889421301}
   m_Layer: 0
   m_Name: ScoutDrone
   m_TagString: Player
@@ -174,6 +175,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value: 0
   MaxValue: 1
+--- !u!114 &5202506747889421301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413270202371189607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e09b613561eb08d42954a8aeec672e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 1
 --- !u!1 &8862586199884592820
 GameObject:
   m_ObjectHideFlags: 0

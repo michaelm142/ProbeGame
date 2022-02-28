@@ -44,12 +44,6 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void Disconnect()
     {
         foreach (var camera in GameObject.FindGameObjectsWithTag("SecurityCamera"))

@@ -7,7 +7,7 @@ public class MenuControls : MonoBehaviour
 {
     public void LoadLevelAsync(string name)
     {
-        SceneManager.LoadScene(name);
+        AsyncSceneLoader.LoadScene("VonBron");
     }
     public void LoadLevel(string name)
     {
@@ -21,6 +21,6 @@ public class MenuControls : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        SceneManager.LoadSceneAsync(4);
+        AsyncSceneLoader.LoadScene("VonBron");
     }
 }

@@ -51,10 +51,10 @@ public class LoadSave : MonoBehaviour
                 }
             }
 
-            playerInventory.probes.Add(probe);
+            playerInventory.drones.Add(probe);
         }
 
-        AsyncSceneLoader.LoadScene(sceneName);
+         AsyncSceneLoader.LoadScene(sceneName);
     }
 
     public static void LoadProgress(int slotIndex)
@@ -65,7 +65,7 @@ public class LoadSave : MonoBehaviour
         LoadProgress(file.FullName);
     }
 
-    public static void SaveProgress()
+    public static void SaveProgress(bool showMessage = true)
     {
         var inventory = FindObjectOfType<PlayerInventory>();
 
@@ -83,7 +83,7 @@ public class LoadSave : MonoBehaviour
         var metalNode = root.AppendChild(doc.CreateElement("Metal"));
         metalNode.InnerText = inventory.Metal.ToString();
 
-        foreach (var probe in inventory.probes)
+        foreach (var probe in inventory.drones)
         {
             var probeNode = doc.CreateElement("Probe");
             var typeAttr = doc.CreateAttribute("Type");
@@ -92,7 +92,7 @@ public class LoadSave : MonoBehaviour
 
             foreach (var upgrade in probe.upgrades)
             {
-                var upgradeElement = doc.CreateElement(upgrade.ToString());
+                var upgradeElement = doc.CreateElement(upgrade.type.ToString());
                 var levelAttr = doc.CreateAttribute("Level");
                 levelAttr.Value = upgrade.Level.ToString();
                 
@@ -105,6 +105,7 @@ public class LoadSave : MonoBehaviour
         using (var filestream = file.Open(FileMode.Create))
             doc.Save(filestream);
 
-        MessageBox.Show(string.Format("Game {0} has been saved", Path.GetFileNameWithoutExtension(file.Name)));
+        if (showMessage)
+            MessageBox.Show(string.Format("Game {0} has been saved", Path.GetFileNameWithoutExtension(file.Name)));
     }
 }

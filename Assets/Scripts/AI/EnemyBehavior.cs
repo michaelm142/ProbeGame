@@ -17,6 +17,8 @@ public class EnemyBehavior : MonoBehaviour
 
     private AiState currentState;
 
+    public bool Scanned;
+
     public enum StartingState
     {
         Idle,
@@ -53,6 +55,8 @@ public class EnemyBehavior : MonoBehaviour
                 agent.isStopped = false;
             currentState.Update();
         }
+        if (Scanned && !GetComponent<MiniMapIcon>().enabled)
+            GetComponent<MiniMapIcon>().enabled = true;
         //Debug.Log(string.Format("Agent {0} current state: {1}", gameObject.name, currentState));
         if (currentTarget != null && Vector3.Distance(currentTarget.transform.position, transform.position) < AttackRadius)
             gameObject.BroadcastMessage("Attack", SendMessageOptions.DontRequireReceiver);
@@ -78,6 +82,11 @@ public class EnemyBehavior : MonoBehaviour
         //Debug.DrawLine(rightPoint, rightPoint + transform.forward * LOS);
         //Debug.DrawLine(rightPoint + transform.forward * LOS, leftPoint + transform.forward * LOS);
         //Debug.DrawLine(leftPoint + transform.forward * LOS, leftPoint);
+    }
+
+    public void DoDamage(float damage)
+    {
+        if (currentTarget != null) currentTarget.SendMessage("Damage", new object[] { damage, transform.position }, SendMessageOptions.DontRequireReceiver);
     }
 }
 

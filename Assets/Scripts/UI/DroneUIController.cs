@@ -11,7 +11,9 @@ public class DroneUIController : MonoBehaviour
     public GameObject DamageDirectionIndicator;
     public GameObject HackingOverlay;
     public GameObject DroneButtonPanel;
+
     public GameObject ScoutReticlue;
+    public GameObject HackerReticle;
 
     private Image damageDirectionIndicatorImage;
     private Image healthBarImage;
@@ -99,21 +101,28 @@ public class DroneUIController : MonoBehaviour
 
         var activeDrone = DroneController.Instance.ActiveDrone;
         if (currentCamera.transform.parent.tag == "SecurityCamera")
+        {
             HUDAudioController.PlaySound(switchToCamera);
+            ScoutReticlue.SetActive(false);
+            HackerReticle.SetActive(false);
+        }
         else if (activeDrone != null)
         {
             if (activeDrone.type == DroneType.Hacker)
             {
                 ScoutReticlue.SetActive(false);
+                HackerReticle.SetActive(true);
                 HUDAudioController.PlaySound(SwitchToDrone);
             }
             else if (activeDrone.type == DroneType.Combat)
             {
                 ScoutReticlue.SetActive(false);
+                HackerReticle.SetActive(false);
                 HUDAudioController.PlaySound(SwitchToCombatDrone);
             }
             else if (activeDrone.type == DroneType.Scout)
             {
+                HackerReticle.SetActive(false);
                 ScoutReticlue.SetActive(true);
             }    
         }

@@ -28,7 +28,7 @@ public class HackingMinigame : MonoBehaviour
 
     public UnityEngine.Events.UnityEvent Win;
 
-    public Color CurrentColor;// { get; set; } = Color.white;
+    public Color CurrentColor { get; set; } = Color.white;
     public List<Color> CompletedColors = new List<Color>();
 
     private Color[] ColorPalette = new Color[]
@@ -90,30 +90,54 @@ public class HackingMinigame : MonoBehaviour
             var secondToLast = line[line.Count - 2];
             if (!lastTile.IsNode)
             {
-                if (secondToLast == lastTile.tile_left || secondToLast == lastTile.tile_right)
+                // O O O
+                // O X <
+                // O O O
+                if (secondToLast == lastTile.tile_left)
                 {
                     lastTile.Color = color;
                     lastTile.transform.rotation = Quaternion.AngleAxis(90.0f, Vector3.forward);
-                    lastTile.sprite = Pipe;
+                    lastTile.sprite = EndPipe;
                 }
-                else if (secondToLast == lastTile.tile_up || secondToLast == lastTile.tile_down)
+                // O O O
+                // > X O
+                // O O O
+                if (secondToLast == lastTile.tile_right)
+                {
+                    lastTile.Color = color;
+                    lastTile.transform.rotation = Quaternion.AngleAxis(-90.0f, Vector3.forward);
+                    lastTile.sprite = EndPipe;
+                }
+                // O O O
+                // O X O
+                // O ^ O
+                else if (secondToLast == lastTile.tile_up)
                 {
                     lastTile.Color = color;
                     lastTile.transform.rotation = Quaternion.AngleAxis(0.0f, Vector3.forward);
-                    lastTile.sprite = Pipe;
+                    lastTile.sprite = EndPipe;
+                }
+                // O O O
+                // O X O
+                // O ^ O
+                else if (secondToLast == lastTile.tile_down)
+                {
+                    lastTile.Color = color;
+                    lastTile.transform.rotation = Quaternion.AngleAxis(180.0f, Vector3.forward);
+                    lastTile.sprite = EndPipe;
                 }
             }
             else
             {
                 // O O O
-                // O X >
+                // O X <
                 // O O O
                 if (lastTile == secondToLast.tile_left)
                 {
                     lastTile.sprite = ConnectedNode;
                     lastTile.transform.rotation = Quaternion.AngleAxis(-90.0f, Vector3.forward);
                 }
-                // O ^ O
+                // O V O
                 // O X O
                 // O O O
                 if (lastTile == secondToLast.tile_down)
@@ -122,7 +146,7 @@ public class HackingMinigame : MonoBehaviour
                     lastTile.transform.rotation = Quaternion.AngleAxis(0.0f, Vector3.forward);
                 }
                 // O O O
-                // < X O
+                // > X O
                 // O O O
                 if (lastTile == secondToLast.tile_right)
                 {
@@ -131,7 +155,7 @@ public class HackingMinigame : MonoBehaviour
                 }
                 // O O O
                 // O X O
-                // O v O
+                // O ^ O
                 if (lastTile == secondToLast.tile_up)
                 {
                     lastTile.sprite = ConnectedNode;

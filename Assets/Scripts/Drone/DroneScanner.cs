@@ -31,7 +31,7 @@ public class DroneScanner : MonoBehaviour
         if (Value == MaxValue && hit.collider.tag == "Enemy")
         {
             hit.collider.GetComponent<Outline>().enabled = true;
-            hit.collider.GetComponent<MiniMapIcon>().enabled = true;
+            hit.collider.GetComponent<EnemyBehavior>().Scanned = true;
         }
     }
 }

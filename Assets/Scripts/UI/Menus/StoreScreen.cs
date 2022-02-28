@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,43 @@ public class StoreScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var playerInventory = FindObjectOfType<PlayerInventory>();
+        if (playerInventory != null)
+        {
+            var purchacing = FindObjectsOfType<DronePurchaseing>().ToList();
+            for (int i = 0; i < purchacing.Count; i++)
+            {
+                if (i >= playerInventory.drones.Count)
+                    continue;
+                var drone = playerInventory.drones[i];
+                DronePurchaseing p = purchacing[i];
+                var button = p.transform.parent.GetComponentInChildren<Button>();
+                if (drone != null)
+                {
+                    p.drone = new PlayerInventory.Drone(drone.type);
+                    button.interactable = false;
+                    foreach (var upgrade in drone.upgrades)
+                        p.LoadUpgrade(upgrade.type, upgrade.Level);
+                }
+                else
+                    button.interactable = true;
+            }
+        }
+    }
+
+    public void ContinueButtonPressed()
+    {
+        var playerInventory = FindObjectOfType<PlayerInventory>();
+        playerInventory.drones.Clear();
+        foreach (DronePurchaseing p in FindObjectsOfType<DronePurchaseing>())
+        {
+            if (p.drone == null)
+                continue;
+
+            playerInventory.drones.Add(p.drone);
+        }
+
+        AsyncSceneLoader.LoadScene("VonBron");
     }
 
     // Update is called once per frame
@@ -49,4 +87,5 @@ public class StoreScreen : MonoBehaviour
         activeSlot = null;
         MainPage.SetTrigger("MainPage");
     }
+
 }

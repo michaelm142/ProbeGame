@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public List<Drone> probes = new List<Drone>();
+    public List<Drone> drones = new List<Drone>();
 
     public int NumStartProbes;
     public float Energy;
@@ -25,7 +25,7 @@ public class PlayerInventory : MonoBehaviour
 
         for (int i = 0; i < NumStartProbes; i++)
         {
-            probes.Add(new Drone());
+            drones.Add(new Drone());
             buyProbesButtons[i].interactable = false;
         }
     }
@@ -67,7 +67,7 @@ public class PlayerInventory : MonoBehaviour
                 Metal -= 850.0f;
                 break;
         }
-        probes.Add(p);
+        drones.Add(p);
 
         return p;
     }
